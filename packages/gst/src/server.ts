@@ -1,6 +1,6 @@
 import { Server } from '@modelcontextprotocol/sdk/server/index.js'
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js'
-import { CallToolRequestSchema, ListToolsRequestSchema } from '@modelcontextprotocol/sdk/types.js'
+import { CallToolRequestSchema, ListToolsRequestSchema, ListPromptsRequestSchema, GetPromptRequestSchema } from '@modelcontextprotocol/sdk/types.js'
 import { CacheLayer, AdapterChain, I18nService } from '@bharat-mcp/core'
 import { GSTMockAdapter, GSTReturnStatusMockAdapter, GSTINByPANMockAdapter } from './adapters/mock'
 import { SandboxGSTAdapter } from './adapters/sandbox'
@@ -9,11 +9,12 @@ import { HSNSearchTool } from './tools/hsn-search'
 import { GSTRateCalcTool } from './tools/gst-rate-calc'
 import { GSTReturnStatusTool } from './tools/gst-return-status'
 import { GSTINByPANTool } from './tools/gstin-by-pan'
+import { vendorDueDiligencePrompt, buildVendorDueDiligenceMessages } from './prompts/vendor-due-diligence'
 
 export function createGSTServer(options?: { sandboxApiKey?: string; sandboxApiSecret?: string; redisUrl?: string; locale?: 'en' | 'hi' }) {
   const server = new Server(
     { name: 'bharat-mcp-gst', version: '0.1.0' },
-    { capabilities: { tools: {} } }
+    { capabilities: { tools: {}, prompts: {} } }
   )
 
   const cache = new CacheLayer(options?.redisUrl)
@@ -131,6 +132,21 @@ export function createGSTServer(options?: { sandboxApiKey?: string; sandboxApiSe
         isError: true
       }
     }
+  })
+
+  server.setRequestHandler(ListPromptsRequestSchema, async () => ({
+    prompts: [vendorDueDiligencePrompt],
+  }))
+
+  server.setRequestHandler(GetPromptRequestSchema, async (request) => {
+    if (request.params.name === 'vendor_due_diligence') {
+      const args = request.params.arguments || {}
+      return buildVendorDueDiligenceMessages(
+        args.gstin || '',
+        args.include_directors === 'true',
+      )
+    }
+    throw new Error(`Unknown prompt: ${request.params.name}`)
   })
 
   return server

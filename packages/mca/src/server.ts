@@ -1,6 +1,6 @@
 import { Server } from '@modelcontextprotocol/sdk/server/index.js';
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
-import { CallToolRequestSchema, ListToolsRequestSchema } from '@modelcontextprotocol/sdk/types.js';
+import { CallToolRequestSchema, ListToolsRequestSchema, ListPromptsRequestSchema, GetPromptRequestSchema } from '@modelcontextprotocol/sdk/types.js';
 import { CacheLayer, AdapterChain, I18nService } from '@bharat-mcp/core';
 import { MCACompanyMockAdapter, MCADirectorMockAdapter, MCAComplianceMockAdapter } from './adapters/mock';
 import { CompanyLookupTool } from './tools/company-lookup';
@@ -8,6 +8,7 @@ import { DirectorSearchTool } from './tools/director-search';
 import { CINValidateTool } from './tools/cin-validate';
 import { ComplianceCheckTool } from './tools/compliance-check';
 import { DirectorNetworkTool } from './tools/director-network';
+import { businessHealthReportPrompt, buildBusinessHealthReportMessages } from './prompts/business-health-report';
 
 export interface MCAServerOptions {
   sandboxApiKey?: string;
@@ -33,7 +34,7 @@ export function createMCAServer(options: MCAServerOptions = {}) {
 
   const server = new Server(
     { name: 'bharat-mcp-mca', version: '0.1.0' },
-    { capabilities: { tools: {} } },
+    { capabilities: { tools: {}, prompts: {} } },
   );
 
   server.setRequestHandler(ListToolsRequestSchema, async () => ({
@@ -158,6 +159,24 @@ export function createMCAServer(options: MCAServerOptions = {}) {
         isError: true,
       };
     }
+  });
+
+  server.setRequestHandler(ListPromptsRequestSchema, async () => ({
+    prompts: [businessHealthReportPrompt],
+  }));
+
+  server.setRequestHandler(GetPromptRequestSchema, async (request) => {
+    if (request.params.name === 'business_health_report') {
+      const args = request.params.arguments || {};
+      return buildBusinessHealthReportMessages({
+        gstin: args.gstin,
+        cin: args.cin,
+        pan: args.pan,
+        includeDirectors: args.include_directors === 'true',
+        includeComplianceHistory: args.include_compliance_history === 'true',
+      });
+    }
+    throw new Error(`Unknown prompt: ${request.params.name}`);
   });
 
   return { server, cache };
