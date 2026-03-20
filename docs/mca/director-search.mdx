@@ -1,0 +1,66 @@
+---
+title: "director_search"
+description: "Find directors by name and view their associated companies and DIN details."
+---
+
+## Description
+
+`director_search` searches the MCA director registry by name and returns matching directors with their Director Identification Number (DIN) and the list of companies they are or were associated with.
+
+## Input Parameters
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `name` | `string` | Yes | Director's full or partial name |
+| `din` | `string` | No | Director Identification Number (exact lookup) |
+
+## Output Fields
+
+| Field | Type | Description |
+|---|---|---|
+| `din` | string | Director Identification Number |
+| `name` | string | Director's name as per MCA records |
+| `status` | string | `APPROVED`, `DISQUALIFIED`, `DEACTIVATED` |
+| `nationality` | string | Director's nationality |
+| `companies` | array | Associated company records |
+| `companies[].cin` | string | Company CIN |
+| `companies[].name` | string | Company name |
+| `companies[].designation` | string | Role (e.g., Director, Managing Director) |
+| `companies[].appointmentDate` | string | Appointment date |
+| `companies[].cessationDate` | string | Cessation date (null if active) |
+
+## Example Conversation
+
+**User:** Find directors named "Narayana Murthy"
+
+**Claude:**
+```json
+{
+  "results": [
+    {
+      "din": "00103914",
+      "name": "NAGAVARA RAMARAO NARAYANA MURTHY",
+      "status": "APPROVED",
+      "nationality": "Indian",
+      "companies": [
+        {
+          "cin": "L85110KA1981PLC013115",
+          "name": "INFOSYS LIMITED",
+          "designation": "Director",
+          "appointmentDate": "1981-07-02",
+          "cessationDate": "2014-10-10"
+        }
+      ]
+    }
+  ]
+}
+```
+
+## Edge Cases
+
+| Scenario | Behaviour |
+|---|---|
+| Disqualified director | `status: "DISQUALIFIED"` with DIN still searchable |
+| Director with no active companies | Returns empty `companies` array |
+| Multiple name matches | Returns all matching directors |
+| DIN lookup | Returns single exact result |

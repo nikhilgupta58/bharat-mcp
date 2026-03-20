@@ -1,0 +1,53 @@
+---
+title: "GST Intelligence"
+description: "Overview of all GST tools — GSTIN verification, HSN search, rate calculation, return status, and more."
+---
+
+## Overview
+
+The GST module connects to India's GSTN (Goods and Services Tax Network) to provide real-time tax intelligence. It exposes five tools that cover the most common GST workflows for businesses, CAs, and compliance teams.
+
+## Available Tools
+
+<CardGroup cols={2}>
+  <Card title="GSTIN Verify" icon="check-circle" href="/gst/gstin-verify">
+    Verify any GSTIN's active status, legal name, state, and taxpayer type.
+  </Card>
+  <Card title="HSN Search" icon="tag" href="/gst/hsn-search">
+    Search HSN/SAC codes by keyword or code number, with descriptions and chapter headings.
+  </Card>
+  <Card title="GST Rate Calculator" icon="calculator" href="/gst/gst-rate-calculator">
+    Compute CGST, SGST, and IGST for a given amount, HSN code, and transaction type.
+  </Card>
+  <Card title="GST Return Status" icon="file-check" href="/gst/gst-return-status">
+    Check GSTR-1, GSTR-3B, and annual return filing status for any GSTIN.
+  </Card>
+  <Card title="GSTIN by PAN" icon="id-card" href="/gst/gstin-by-pan">
+    Discover all GSTINs registered under a given PAN number.
+  </Card>
+</CardGroup>
+
+## Data Sources
+
+| Source | Environment | Latency |
+|---|---|---|
+| GSTN Sandbox API | `BHARAT_MCP_ENV=sandbox` | ~200ms |
+| GSTN Production API | `BHARAT_MCP_ENV=production` | ~300ms |
+
+## Caching
+
+| Data type | Default TTL |
+|---|---|
+| GSTIN details | 1 hour |
+| HSN codes | 24 hours |
+| GST rates | 24 hours |
+| Return status | 15 minutes |
+
+## Common Patterns
+
+```
+# Onboard a new vendor
+1. gstin_verify(gstin) → confirm active + get PAN
+2. gst_return_status(gstin) → check filing compliance
+3. cross-module risk_score → aggregate signal
+```

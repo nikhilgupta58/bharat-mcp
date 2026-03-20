@@ -1,0 +1,53 @@
+---
+title: "Business Health Report"
+description: "Comprehensive business health check combining GST activity, MCA compliance, and financial signals."
+---
+
+## Overview
+
+`business_health_report` generates a multi-dimensional health assessment of a business entity. Unlike `risk_score` (which focuses on red flags), this report provides a holistic picture including positive signals — useful for credit underwriting, investment due-diligence, or partnership evaluation.
+
+## Input Parameters
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `gstin` | `string` | No | Business GSTIN |
+| `cin` | `string` | No | Company CIN |
+| `pan` | `string` | No | Business PAN |
+
+At least one identifier required.
+
+## Output Fields
+
+| Field | Type | Description |
+|---|---|---|
+| `entityName` | string | Resolved business name |
+| `overallScore` | number | 0–100 health score (higher = healthier) |
+| `grade` | string | `A`, `B`, `C`, `D`, `F` |
+| `dimensions` | object | Score breakdown by dimension |
+| `dimensions.gstCompliance` | number | 0–100 GST compliance score |
+| `dimensions.mcaCompliance` | number | 0–100 MCA compliance score |
+| `dimensions.businessAge` | number | 0–100 maturity score |
+| `dimensions.entityResolution` | number | 0–100 data confidence score |
+| `positiveSignals` | array | Green flags found |
+| `negativeSignals` | array | Red flags found |
+| `summary` | string | Plain-English health summary |
+
+## Health Score Dimensions
+
+| Dimension | Weight | What it measures |
+|---|---|---|
+| GST Compliance | 35% | Filing frequency, GSTIN active status, return timeliness |
+| MCA Compliance | 35% | Annual return filings, financial statement submissions |
+| Business Age | 15% | Years since incorporation (older = more mature) |
+| Entity Resolution | 15% | Confidence in cross-module data linkage |
+
+## Grade Bands
+
+| Grade | Score | Interpretation |
+|---|---|---|
+| A | 80–100 | Excellent — low risk, strong compliance track record |
+| B | 60–79 | Good — minor gaps, worth investigating |
+| C | 40–59 | Fair — notable compliance issues present |
+| D | 20–39 | Poor — significant risk signals |
+| F | 0–19 | Critical — do not proceed without deep review |

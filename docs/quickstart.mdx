@@ -1,0 +1,96 @@
+---
+title: "Quickstart"
+description: "Install Bharat MCP and run your first query in under 2 minutes."
+---
+
+## Prerequisites
+
+- Node.js 18+
+- Claude Desktop (or any MCP-compatible client)
+- A Bharat MCP API key ([get sandbox key →](#get-api-key))
+
+---
+
+## Step 1 — Install
+
+```bash
+npm install -g bharat-mcp
+```
+
+Or run without installing:
+
+```bash
+npx bharat-mcp
+```
+
+---
+
+## Step 2 — Get a Sandbox API Key
+
+1. Visit [https://bharatmcp.dev/sandbox](https://bharatmcp.dev/sandbox)
+2. Sign in with Google
+3. Copy the `BHARAT_MCP_API_KEY` shown on the dashboard
+
+The sandbox key gives you 500 free requests/day against live GSTN and MCA test data.
+
+---
+
+## Step 3 — Configure Claude Desktop
+
+Open your Claude Desktop config file:
+
+- **macOS:** `~/Library/Application Support/Claude/claude_desktop_config.json`
+- **Windows:** `%APPDATA%\Claude\claude_desktop_config.json`
+
+Add the Bharat MCP server:
+
+```json
+{
+  "mcpServers": {
+    "bharat-mcp": {
+      "command": "npx",
+      "args": ["bharat-mcp"],
+      "env": {
+        "BHARAT_MCP_API_KEY": "your_sandbox_key_here",
+        "BHARAT_MCP_ENV": "sandbox"
+      }
+    }
+  }
+}
+```
+
+Restart Claude Desktop.
+
+---
+
+## Step 4 — First Query
+
+In Claude Desktop, type:
+
+> Verify GSTIN 27AAPFU0939F1ZV
+
+Claude will call the `gstin_verify` tool and return:
+
+```json
+{
+  "gstin": "27AAPFU0939F1ZV",
+  "status": "ACTIVE",
+  "legalName": "FLIPKART INDIA PRIVATE LIMITED",
+  "tradeName": "FLIPKART",
+  "stateCode": "27",
+  "state": "Maharashtra",
+  "registrationDate": "2017-07-01",
+  "taxpayerType": "Regular",
+  "lastReturnFiled": "GSTR-3B for Oct 2024"
+}
+```
+
+Claude will summarise: *"GSTIN 27AAPFU0939F1ZV belongs to Flipkart India Private Limited, an active regular taxpayer registered in Maharashtra since July 2017."*
+
+---
+
+## Next Steps
+
+- [GST tool reference →](/gst/overview)
+- [MCA company lookup →](/mca/overview)
+- [Hindi quickstart →](/quickstart-hindi)

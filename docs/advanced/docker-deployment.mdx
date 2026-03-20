@@ -1,0 +1,97 @@
+---
+title: "Docker Deployment"
+description: "Deploy Bharat MCP as a containerised service with Docker and docker-compose."
+---
+
+## Prerequisites
+
+- Docker 24+
+- docker-compose v2
+
+## Quick Start
+
+```bash
+docker run -p 3000:3000 \
+  -e BHARAT_MCP_API_KEY=your_key \
+  -e BHARAT_MCP_ENV=production \
+  ghcr.io/year1design/bharat-mcp:latest
+```
+
+## docker-compose Setup
+
+```yaml
+# docker-compose.yml
+version: "3.9"
+
+services:
+  bharat-mcp:
+    image: ghcr.io/year1design/bharat-mcp:latest
+    ports:
+      - "3000:3000"
+    environment:
+      BHARAT_MCP_API_KEY: ${BHARAT_MCP_API_KEY}
+      BHARAT_MCP_ENV: production
+      BHARAT_MCP_CACHE: redis
+      REDIS_URL: redis://redis:6379
+      BHARAT_MCP_LANG: en
+      BHARAT_MCP_LOG_LEVEL: info
+    depends_on:
+      - redis
+    restart: unless-stopped
+
+  redis:
+    image: redis:7-alpine
+    volumes:
+      - redis_data:/data
+    restart: unless-stopped
+
+volumes:
+  redis_data:
+```
+
+```bash
+# Start services
+BHARAT_MCP_API_KEY=your_key docker-compose up -d
+
+# View logs
+docker-compose logs -f bharat-mcp
+
+# Stop
+docker-compose down
+```
+
+## Environment Variables
+
+| Variable | Required | Default | Description |
+|---|---|---|---|
+| `BHARAT_MCP_API_KEY` | Yes | — | API key |
+| `BHARAT_MCP_ENV` | No | `production` | `sandbox` or `production` |
+| `BHARAT_MCP_CACHE` | No | `lru` | `lru`, `redis`, `none` |
+| `REDIS_URL` | If cache=redis | — | Redis connection URL |
+| `BHARAT_MCP_LANG` | No | `en` | `en` or `hi` |
+| `BHARAT_MCP_RATE_LIMIT` | No | `10` | Requests per second |
+| `PORT` | No | `3000` | HTTP server port |
+| `BHARAT_MCP_LOG_LEVEL` | No | `info` | Log verbosity |
+
+## Streamable HTTP Mode
+
+When deployed as a Docker service, Bharat MCP runs in **Streamable HTTP** mode (SSE transport) instead of stdio. Connect Claude or any MCP client to `http://localhost:3000/mcp`.
+
+Claude Desktop config for HTTP mode:
+
+```json
+{
+  "mcpServers": {
+    "bharat-mcp": {
+      "url": "http://localhost:3000/mcp"
+    }
+  }
+}
+```
+
+## Health Check
+
+```bash
+curl http://localhost:3000/health
+# {"status":"ok","version":"1.0.0","uptime":3600}
+```

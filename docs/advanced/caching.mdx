@@ -1,0 +1,88 @@
+---
+title: "Caching"
+description: "Redis vs LRU cache configuration, TTL settings, and cache invalidation."
+---
+
+## Overview
+
+Bharat MCP caches all upstream API responses to reduce latency and stay within rate limits. Two cache backends are supported: in-memory LRU (default for local/dev) and Redis (recommended for production).
+
+## Cache Backends
+
+### LRU (In-Memory)
+
+Default mode. Cache lives in the Node.js process.
+
+```bash
+BHARAT_MCP_CACHE=lru
+```
+
+| Pros | Cons |
+|---|---|
+| Zero setup | Lost on process restart |
+| No external dependency | Not shared across multiple instances |
+| Fastest read latency | Limited by process memory |
+
+### Redis
+
+Recommended for production and Docker deployments.
+
+```bash
+BHARAT_MCP_CACHE=redis
+REDIS_URL=redis://localhost:6379
+```
+
+| Pros | Cons |
+|---|---|
+| Survives restarts | Requires Redis service |
+| Shared across instances | Small network overhead |
+| Supports large cache sizes | — |
+
+### No Cache
+
+Disable caching entirely (useful for debugging or testing).
+
+```bash
+BHARAT_MCP_CACHE=none
+```
+
+## TTL Configuration
+
+Default TTLs by data type:
+
+| Data type | Tool | Default TTL |
+|---|---|---|
+| GSTIN details | `gstin_verify` | 1 hour |
+| GSTIN by PAN | `gstin_by_pan` | 1 hour |
+| Return status | `gst_return_status` | 15 minutes |
+| HSN codes | `hsn_search` | 24 hours |
+| GST rates | `gst_rate_calculator` | 24 hours |
+| Company master | `company_lookup` | 24 hours |
+| MCA compliance | `compliance_check` | 2 hours |
+| Director data | `director_search` | 24 hours |
+
+Override TTLs via environment variables:
+
+```bash
+BHARAT_MCP_TTL_GSTIN=3600        # seconds
+BHARAT_MCP_TTL_RETURN_STATUS=900
+BHARAT_MCP_TTL_HSN=86400
+BHARAT_MCP_TTL_COMPANY=86400
+```
+
+## Cache Keys
+
+Cache keys follow the pattern: `bharat:{tool_name}:{hash(params)}`
+
+Example: `bharat:gstin_verify:a3f9b2c1`
+
+## Cache Invalidation
+
+To force a fresh fetch, append `?nocache=1` to the tool call (available in HTTP mode only), or flush the cache:
+
+```bash
+# Flush Redis cache
+redis-cli FLUSHDB
+
+# LRU cache auto-expires; no manual flush needed
+```

@@ -1,0 +1,54 @@
+{
+  "$schema": "https://mintlify.com/schema.json",
+  "name": "Bharat MCP",
+  "logo": {
+    "dark": "/logo/dark.svg",
+    "light": "/logo/light.svg"
+  },
+  "favicon": "/favicon.svg",
+  "colors": {
+    "primary": "#1a1a4e",
+    "light": "#FF9933",
+    "dark": "#1a1a4e",
+    "anchors": { "from": "#1a1a4e", "to": "#FF9933" }
+  },
+  "topbarLinks": [
+    { "name": "GitHub", "url": "https://github.com/year1design/bharat-mcp" }
+  ],
+  "tabs": [
+    { "name": "Documentation", "url": "docs" }
+  ],
+  "navigation": [
+    {
+      "group": "Getting Started",
+      "pages": ["introduction", "quickstart", "quickstart-hindi", "architecture"]
+    },
+    {
+      "group": "GST Intelligence",
+      "pages": ["gst/overview", "gst/gstin-verify", "gst/hsn-search", "gst/gst-rate-calculator", "gst/gst-return-status", "gst/gstin-by-pan"]
+    },
+    {
+      "group": "Company Intelligence",
+      "pages": ["mca/overview", "mca/company-lookup", "mca/director-search", "mca/cin-validate", "mca/compliance-check", "mca/director-network"]
+    },
+    {
+      "group": "Cross-Module",
+      "pages": ["cross-module/entity-resolution", "cross-module/risk-scoring", "cross-module/vendor-due-diligence", "cross-module/business-health-report"]
+    },
+    {
+      "group": "Advanced",
+      "pages": ["advanced/batch-operations", "advanced/docker-deployment", "advanced/caching", "advanced/i18n"]
+    },
+    {
+      "group": "Reference",
+      "pages": ["reference/error-codes", "reference/changelog"]
+    },
+    {
+      "group": "Community",
+      "pages": ["community/contributing", "community/roadmap"]
+    }
+  ],
+  "footerSocials": {
+    "github": "https://github.com/year1design/bharat-mcp"
+  }
+}

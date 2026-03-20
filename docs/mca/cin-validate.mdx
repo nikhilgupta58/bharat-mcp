@@ -1,0 +1,60 @@
+---
+title: "cin_validate"
+description: "Validate a CIN's format and confirm it exists in the MCA21 registry."
+---
+
+## Description
+
+`cin_validate` performs two checks: (1) structural format validation against the CIN pattern, and (2) a live MCA21 lookup to confirm the CIN exists and is not struck off.
+
+A valid CIN follows this structure: `L85110KA1981PLC013115`
+- Position 1: Listing status (`L` = Listed, `U` = Unlisted)
+- Positions 2–6: Industry code
+- Positions 7–8: State code
+- Positions 9–12: Year of incorporation
+- Positions 13–15: Entity type (`PLC`, `PVT`, `LLP`, etc.)
+- Positions 16–21: Unique serial number
+
+## Input Parameters
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `cin` | `string` | Yes | Corporate Identity Number to validate |
+
+## Output Fields
+
+| Field | Type | Description |
+|---|---|---|
+| `cin` | string | The queried CIN |
+| `valid` | boolean | Whether format and MCA lookup both pass |
+| `formatValid` | boolean | Whether the CIN matches the expected pattern |
+| `exists` | boolean | Whether CIN is found in MCA21 |
+| `companyName` | string | Company name (if found) |
+| `status` | string | Company status (if found) |
+| `errors` | array | List of validation error messages |
+
+## Example Conversation
+
+**User:** Validate CIN L85110KA1981PLC013115
+
+**Claude:**
+```json
+{
+  "cin": "L85110KA1981PLC013115",
+  "valid": true,
+  "formatValid": true,
+  "exists": true,
+  "companyName": "INFOSYS LIMITED",
+  "status": "ACTIVE",
+  "errors": []
+}
+```
+
+## Edge Cases
+
+| Scenario | Behaviour |
+|---|---|
+| Wrong length | `formatValid: false`, error message |
+| Valid format but CIN not in MCA | `formatValid: true`, `exists: false` |
+| Struck-off company | `valid: false`, `status: "STRUCK_OFF"` |
+| LLP CIN format | Validated against LLPIN pattern instead |

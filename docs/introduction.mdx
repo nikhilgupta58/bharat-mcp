@@ -1,0 +1,70 @@
+---
+title: "Introduction"
+description: "India's Business Brain for AI — GST intelligence, company data, and cross-module risk scoring via MCP."
+---
+
+# भारत MCP
+
+**India's Business Brain for AI** is a Model Context Protocol (MCP) server that gives AI assistants like Claude real-time access to Indian business data — GST registrations, HSN codes, company filings, director networks, and more.
+
+## What is Bharat MCP?
+
+Bharat MCP exposes a suite of tools over the MCP protocol so that any compatible AI client can:
+
+- **Verify GST registrations** in real time against the GSTN database
+- **Look up HSN/SAC codes** and applicable tax rates
+- **Fetch MCA company data** — CIN, directors, compliance status
+- **Resolve entities** across GST and MCA (GSTIN → PAN → CIN)
+- **Score vendor risk** using multi-signal analysis
+
+All responses are returned in structured JSON, with optional Hindi summaries.
+
+## Who is it for?
+
+| Persona | Use case |
+|---|---|
+| CA / Tax Consultant | Verify GSTINs, check return filing status, compute GST on invoices |
+| Procurement Team | Vendor due-diligence before onboarding |
+| Legal / Compliance | Director network analysis, MCA compliance checks |
+| Fintech / Lender | Business health scores for credit underwriting |
+| Developer | Build India-aware AI agents with a single npm install |
+
+## Key Features
+
+<CardGroup cols={2}>
+  <Card title="GST Intelligence" icon="receipt">
+    GSTIN verification, HSN search, rate calculation, return status, GSTIN-by-PAN lookup.
+  </Card>
+  <Card title="Company Intelligence" icon="building">
+    MCA company lookup, director search, CIN validation, compliance checks, director network graphs.
+  </Card>
+  <Card title="Cross-Module Resolution" icon="link">
+    Unified entity resolution across GST and MCA data sources.
+  </Card>
+  <Card title="Risk Scoring" icon="shield">
+    Multi-signal vendor risk scores with confidence levels and audit trails.
+  </Card>
+</CardGroup>
+
+## Architecture at a Glance
+
+```
+AI Client (Claude Desktop / API)
+        │  MCP protocol
+        ▼
+  Bharat MCP Server
+   ├── GST Module       ← GSTN Sandbox / Production API
+   ├── MCA Module       ← MCA21 data
+   └── Cross-Module     ← entity resolution + risk engine
+```
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Quickstart" icon="rocket" href="/quickstart">
+    Up and running in under 2 minutes.
+  </Card>
+  <Card title="Architecture" icon="diagram-project" href="/architecture">
+    Deep dive into the adapter chain pattern.
+  </Card>
+</CardGroup>

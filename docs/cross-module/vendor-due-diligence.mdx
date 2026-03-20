@@ -1,0 +1,58 @@
+---
+title: "Vendor Due Diligence"
+description: "End-to-end vendor onboarding check using GST, MCA, and risk scoring."
+---
+
+## Overview
+
+`vendor_due_diligence` is a composite tool that runs a full vendor check in a single call. It combines GSTIN verification, return status, MCA compliance, and risk scoring into one structured report.
+
+## Input Parameters
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `gstin` | `string` | Yes | Vendor's GSTIN |
+| `includeDirectors` | `boolean` | No | Include director background check (default: `false`) |
+| `includeNetwork` | `boolean` | No | Include director network graph (default: `false`) |
+
+## Output Fields
+
+| Field | Type | Description |
+|---|---|---|
+| `gstin` | string | Verified GSTIN |
+| `pan` | string | Resolved PAN |
+| `cin` | string | Resolved CIN (if company) |
+| `gstStatus` | object | GSTIN verification result |
+| `returnCompliance` | object | GST return filing status |
+| `mcaStatus` | object | MCA company and compliance check |
+| `riskScore` | object | Full risk score with signals |
+| `directors` | array | Director details (if `includeDirectors: true`) |
+| `network` | object | Director network graph (if `includeNetwork: true`) |
+| `summary` | string | Plain-English due-diligence summary |
+| `recommendation` | string | `APPROVE`, `REVIEW`, `REJECT` |
+
+## Example Conversation
+
+**User:** Run vendor due-diligence for GSTIN 27AAPFU0939F1ZV
+
+**Claude returns a full report:**
+
+```json
+{
+  "recommendation": "APPROVE",
+  "riskScore": { "score": 5, "band": "LOW RISK" },
+  "summary": "Flipkart India Pvt Ltd is an active, fully compliant GST taxpayer and MCA-registered company with no risk signals. Safe to onboard.",
+  "gstStatus": { "status": "ACTIVE", "taxpayerType": "Regular" },
+  "returnCompliance": { "filingStatus": "COMPLIANT", "pendingReturns": 0 },
+  "mcaStatus": { "complianceStatus": "COMPLIANT", "defaults": 0 }
+}
+```
+
+## Recommendation Logic
+
+| Condition | Recommendation |
+|---|---|
+| Score 0–20, all modules COMPLIANT | `APPROVE` |
+| Score 21–60, minor flags | `REVIEW` |
+| Score > 60, or GSTIN inactive, or DEFAULTER | `REJECT` |
+| Resolution confidence LOW | `REVIEW` (regardless of score) |

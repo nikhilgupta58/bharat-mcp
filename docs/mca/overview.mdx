@@ -1,0 +1,53 @@
+---
+title: "Company Intelligence"
+description: "Overview of MCA tools — company lookup, director search, CIN validation, compliance checks, and director network analysis."
+---
+
+## Overview
+
+The MCA (Ministry of Corporate Affairs) module provides access to India's official company registry data. It exposes five tools for company and director intelligence, compliance verification, and network analysis.
+
+## Available Tools
+
+<CardGroup cols={2}>
+  <Card title="Company Lookup" icon="building" href="/mca/company-lookup">
+    Fetch full company master data by name or CIN.
+  </Card>
+  <Card title="Director Search" icon="user-tie" href="/mca/director-search">
+    Find directors by name and see their associated companies.
+  </Card>
+  <Card title="CIN Validate" icon="barcode" href="/mca/cin-validate">
+    Validate CIN format and confirm existence in MCA21.
+  </Card>
+  <Card title="Compliance Check" icon="clipboard-check" href="/mca/compliance-check">
+    Verify annual return and financial statement filing status.
+  </Card>
+  <Card title="Director Network" icon="diagram-project" href="/mca/director-network">
+    Explore the graph of director-company relationships.
+  </Card>
+</CardGroup>
+
+## Data Sources
+
+MCA data is sourced from the MCA21 public portal. Data freshness depends on the last MCA filing sync.
+
+| Data type | Typical freshness |
+|---|---|
+| Company master | ~24 hours |
+| Director details | ~24 hours |
+| Compliance filings | ~48 hours |
+
+## Common Patterns
+
+```
+# Director background check
+1. director_search(name) → get DIN + list of companies
+2. compliance_check(cin) for each company → flag defaults
+3. director_network(din) → uncover hidden connections
+
+# Company due-diligence
+1. company_lookup(name or CIN) → get CIN + key info
+2. cin_validate(cin) → confirm active
+3. compliance_check(cin) → check filing history
+4. cross-module risk_score → final vendor score
+```

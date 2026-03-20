@@ -1,0 +1,113 @@
+---
+title: "Architecture"
+description: "System design, module overview, and the adapter chain pattern."
+---
+
+## System Overview
+
+```
+┌─────────────────────────────────────────────────────┐
+│              AI Client (Claude Desktop)              │
+│                  MCP Protocol (stdio/SSE)            │
+└───────────────────────┬─────────────────────────────┘
+                        │
+┌───────────────────────▼─────────────────────────────┐
+│                 Bharat MCP Server                    │
+│  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐ │
+│  │ GST Module  │  │ MCA Module  │  │Cross-Module │ │
+│  │             │  │             │  │  Resolver   │ │
+│  └──────┬──────┘  └──────┬──────┘  └──────┬──────┘ │
+│         │                │                │         │
+│  ┌──────▼────────────────▼────────────────▼──────┐  │
+│  │              Adapter Chain                    │  │
+│  │  Cache Layer → Rate Limiter → HTTP Adapter   │  │
+│  └───────────────────────┬───────────────────────┘  │
+└───────────────────────────┼──────────────────────────┘
+                            │
+          ┌─────────────────┼─────────────────┐
+          ▼                 ▼                 ▼
+   GSTN Sandbox/        MCA21 API         Internal
+   Production API       (public data)     Risk Engine
+```
+
+## Module Breakdown
+
+### GST Module
+
+Handles all GST Intelligence tools. Connects to the GSTN Sandbox API (for development) or the production GSTN API.
+
+| Tool | Description |
+|---|---|
+| `gstin_verify` | Real-time GSTIN status from GSTN |
+| `hsn_search` | HSN/SAC code lookup with descriptions |
+| `gst_rate_calculator` | Compute CGST/SGST/IGST on an amount |
+| `gst_return_status` | Filing status for GSTR-1, GSTR-3B, etc. |
+| `gstin_by_pan` | Discover GSTINs linked to a PAN |
+
+### MCA Module
+
+Connects to MCA21 public datasets and APIs.
+
+| Tool | Description |
+|---|---|
+| `company_lookup` | Full company master by name or CIN |
+| `director_search` | Directors and their associated companies |
+| `cin_validate` | Validate CIN format and existence |
+| `compliance_check` | Annual return and financial filing status |
+| `director_network` | Graph of director ↔ company relationships |
+
+### Cross-Module Resolver
+
+The resolver chains data across GST and MCA to produce unified entity profiles.
+
+```
+GSTIN → extract PAN → gstin_by_pan to confirm →
+  PAN → mca director_search → company CINs →
+    CINs → company_lookup + compliance_check →
+      all signals → risk_score
+```
+
+## Adapter Chain Pattern
+
+Every external API call passes through a three-layer adapter chain:
+
+```
+Tool Call
+   │
+   ▼
+┌──────────────┐
+│  Cache Layer │  Redis (prod) or in-memory LRU (dev)
+│              │  TTL: 1h for GSTIN, 24h for HSN
+└──────┬───────┘
+       │ cache miss
+       ▼
+┌──────────────┐
+│ Rate Limiter │  Sliding window per API key
+│              │  Default: 10 req/s, burst 30
+└──────┬───────┘
+       │
+       ▼
+┌──────────────┐
+│ HTTP Adapter │  Axios with retry (3x, exp backoff)
+│              │  Timeout: 8s per request
+└──────┬───────┘
+       │
+       ▼
+  External API
+```
+
+## Language Layer
+
+When `BHARAT_MCP_LANG=hi` is set, all tool outputs are passed through the i18n formatter before being returned to the MCP client. The formatter uses locale-aware number formatting (Indian numbering system) and Hindi field labels.
+
+## Configuration Reference
+
+| Environment Variable | Default | Description |
+|---|---|---|
+| `BHARAT_MCP_API_KEY` | — | Required. Your API key. |
+| `BHARAT_MCP_ENV` | `production` | `sandbox` or `production` |
+| `BHARAT_MCP_LANG` | `en` | `en` or `hi` |
+| `BHARAT_MCP_CACHE` | `lru` | `lru`, `redis`, or `none` |
+| `REDIS_URL` | — | Required when `CACHE=redis` |
+| `BHARAT_MCP_RATE_LIMIT` | `10` | Requests per second |
+| `BHARAT_MCP_LOG_LEVEL` | `info` | `debug`, `info`, `warn`, `error` |

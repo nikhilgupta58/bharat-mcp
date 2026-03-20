@@ -1,0 +1,71 @@
+---
+title: "Batch Operations"
+description: "Run multiple tool calls in parallel with rate limiting and structured output."
+---
+
+## Overview
+
+Batch operations allow you to run the same tool against many inputs in a single request. This is useful for bulk vendor verification, portfolio analysis, or enriching a spreadsheet of GSTINs.
+
+## How Batch Works
+
+```
+batch_gstin_verify(gstins: ["GSTIN1", "GSTIN2", ..., "GSTIN50"])
+         │
+         ▼
+  Bharat MCP splits into N individual tool calls
+         │
+  Rate limiter queues them (10 req/s default)
+         │
+  Results collected in order → returned as array
+```
+
+## Available Batch Tools
+
+| Tool | Batch version |
+|---|---|
+| `gstin_verify` | `batch_gstin_verify` |
+| `company_lookup` | `batch_company_lookup` |
+| `compliance_check` | `batch_compliance_check` |
+| `vendor_due_diligence` | `batch_vendor_due_diligence` |
+
+## Input Parameters (all batch tools)
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `inputs` | `array` | Yes | Array of input objects (same schema as single tool) |
+| `continueOnError` | `boolean` | No | Continue if one item fails (default: `true`) |
+| `concurrency` | `number` | No | Parallel requests (default: 5, max: 10) |
+
+## Output Format
+
+```json
+{
+  "total": 50,
+  "succeeded": 48,
+  "failed": 2,
+  "results": [
+    { "input": "27AAPFU0939F1ZV", "status": "ok",    "data": { ... } },
+    { "input": "INVALID",          "status": "error", "error": "VALIDATION_ERROR" }
+  ]
+}
+```
+
+## Rate Limiting
+
+- Default: 10 requests/second
+- Batch respects the same limit — items are queued internally
+- Increase via `BHARAT_MCP_RATE_LIMIT` env variable
+- Sandbox API: capped at 500 total requests/day regardless of rate
+
+## Example
+
+**User:** Verify these 3 GSTINs: 27AAPFU0939F1ZV, 29ABCDE1234F1Z5, 07XXXXX1234X1ZX
+
+Claude calls `batch_gstin_verify` and returns a table summary of all three results.
+
+## Best Practices
+
+- Keep batches under 100 items for predictable latency
+- Use `continueOnError: true` for data enrichment workflows
+- Use `continueOnError: false` for compliance workflows where any failure should halt

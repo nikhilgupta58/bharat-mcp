@@ -1,0 +1,41 @@
+---
+title: "Changelog"
+description: "Version history and notable changes for Bharat MCP."
+---
+
+## v1.0.0 — 2025-03-20
+
+Initial public release.
+
+### GST Intelligence
+- `gstin_verify` — real-time GSTIN verification against GSTN
+- `hsn_search` — bundled HSN/SAC code search with GST rates
+- `gst_rate_calculator` — CGST/SGST/IGST breakdown
+- `gst_return_status` — GSTR-1, GSTR-3B, GSTR-9 filing status
+- `gstin_by_pan` — discover all GSTINs under a PAN
+
+### Company Intelligence
+- `company_lookup` — MCA company master by name or CIN
+- `director_search` — director registry with DIN and company list
+- `cin_validate` — CIN format and MCA existence check
+- `compliance_check` — annual return and financial statement status
+- `director_network` — director-company relationship graph
+
+### Cross-Module
+- `entity_resolve` — GSTIN → PAN → CIN unified resolution
+- `risk_score` — multi-signal 0–100 vendor risk score
+- `vendor_due_diligence` — composite vendor onboarding report
+- `business_health_report` — A–F health grade with dimension breakdown
+
+### Infrastructure
+- LRU and Redis cache backends with configurable TTLs
+- Batch tools for bulk operations
+- Docker image with Streamable HTTP (SSE) transport
+- Hindi (hi) i18n support with Indian number formatting
+- GitHub Actions CI/CD pipeline
+
+---
+
+## Roadmap
+
+See [Roadmap →](/community/roadmap) for upcoming features.

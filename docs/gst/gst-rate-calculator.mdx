@@ -1,0 +1,62 @@
+---
+title: "gst_rate_calculator"
+description: "Compute CGST, SGST, and IGST on a transaction amount given HSN code and supply type."
+---
+
+## Description
+
+`gst_rate_calculator` computes the exact GST breakdown for a transaction. Provide the base amount, HSN/SAC code, and whether the supply is intrastate or interstate — the tool returns CGST, SGST, IGST, and total amounts.
+
+## Input Parameters
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `amount` | `number` | Yes | Base transaction amount in INR (before GST) |
+| `hsn` | `string` | Yes | HSN or SAC code (e.g., `8471`, `9983`) |
+| `supplyType` | `string` | Yes | `intrastate` or `interstate` |
+| `includeReverseCharge` | `boolean` | No | Flag reverse charge applicability (default: `false`) |
+
+## Output Fields
+
+| Field | Type | Description |
+|---|---|---|
+| `baseAmount` | number | Input amount |
+| `gstRate` | number | Applicable GST rate (%) |
+| `cgst` | number | Central GST amount (intrastate only) |
+| `sgst` | number | State GST amount (intrastate only) |
+| `igst` | number | Integrated GST amount (interstate only) |
+| `cess` | number | Cess amount (0 if not applicable) |
+| `totalTax` | number | Total tax amount |
+| `totalAmount` | number | Base + total tax |
+| `reverseCharge` | boolean | Whether RCM applies |
+
+## Example Conversation
+
+**User:** Calculate GST on ₹50,000 for HSN 8471 (laptop), intrastate transaction
+
+**Claude:**
+```json
+{
+  "baseAmount": 50000,
+  "gstRate": 18,
+  "cgst": 4500,
+  "sgst": 4500,
+  "igst": 0,
+  "cess": 0,
+  "totalTax": 9000,
+  "totalAmount": 59000,
+  "reverseCharge": false
+}
+```
+
+*On a ₹50,000 intrastate laptop purchase: CGST ₹4,500 + SGST ₹4,500 = ₹9,000 total GST. Invoice value: ₹59,000.*
+
+## Edge Cases
+
+| Scenario | Behaviour |
+|---|---|
+| Unknown HSN code | Returns `NOT_FOUND` error |
+| Interstate supply | `cgst` and `sgst` are 0; `igst` is populated |
+| Cess-applicable goods (e.g., luxury cars) | `cess` field populated |
+| HSN with nil rate | Returns `gstRate: 0`, all tax fields are 0 |
+| Exempt supplies | Returns `gstRate: "EXEMPT"`, no tax fields |

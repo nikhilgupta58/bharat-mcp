@@ -1,0 +1,65 @@
+---
+title: "director_network"
+description: "Explore the graph of director-company relationships to uncover connected entities."
+---
+
+## Description
+
+`director_network` builds a relationship graph starting from a DIN or CIN and traverses connected directors and companies up to a specified depth. Useful for identifying shell company networks, hidden conflicts of interest, and ownership chains.
+
+## Input Parameters
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `din` | `string` | No | Director DIN — start traversal from a director |
+| `cin` | `string` | No | Company CIN — start traversal from a company |
+| `depth` | `number` | No | Traversal depth (default: 2, max: 3) |
+
+At least one of `din` or `cin` must be provided.
+
+## Output Fields
+
+| Field | Type | Description |
+|---|---|---|
+| `nodes` | array | All entities (directors and companies) in the graph |
+| `nodes[].id` | string | DIN or CIN |
+| `nodes[].type` | string | `DIRECTOR` or `COMPANY` |
+| `nodes[].name` | string | Name |
+| `nodes[].status` | string | Current status |
+| `edges` | array | Relationships between nodes |
+| `edges[].from` | string | Source node ID (DIN) |
+| `edges[].to` | string | Target node ID (CIN) |
+| `edges[].designation` | string | Director's role in the company |
+| `edges[].active` | boolean | Whether the directorship is currently active |
+| `totalNodes` | number | Total nodes in graph |
+| `totalEdges` | number | Total edges in graph |
+
+## Example Conversation
+
+**User:** Show the director network for DIN 00103914 (Narayana Murthy)
+
+**Claude:**
+```json
+{
+  "totalNodes": 4,
+  "totalEdges": 3,
+  "nodes": [
+    { "id": "00103914", "type": "DIRECTOR", "name": "N R NARAYANA MURTHY", "status": "APPROVED" },
+    { "id": "L85110KA1981PLC013115", "type": "COMPANY", "name": "INFOSYS LIMITED", "status": "ACTIVE" },
+    { "id": "U72200KA2000PTC026741", "type": "COMPANY", "name": "CATAMARAN VENTURES", "status": "ACTIVE" }
+  ],
+  "edges": [
+    { "from": "00103914", "to": "L85110KA1981PLC013115", "designation": "Director", "active": false },
+    { "from": "00103914", "to": "U72200KA2000PTC026741", "designation": "Managing Director", "active": true }
+  ]
+}
+```
+
+## Edge Cases
+
+| Scenario | Behaviour |
+|---|---|
+| Depth 3 on a large network | May return up to 500 nodes; truncated with a warning |
+| Disqualified director | Included in graph with `status: "DISQUALIFIED"` |
+| Both `din` and `cin` provided | Starts traversal from both; merges graphs |
+| Isolated node (no connections) | Returns single node, zero edges |

@@ -1,0 +1,60 @@
+---
+title: "compliance_check"
+description: "Check a company's MCA filing compliance — annual returns, financial statements, and charge filings."
+---
+
+## Description
+
+`compliance_check` retrieves the filing history and compliance status for a company on MCA21, covering annual returns (MGT-7), financial statements (AOC-4), and other key forms. A non-compliant supplier may signal financial or governance risk.
+
+## Input Parameters
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `cin` | `string` | Yes | Company CIN |
+| `years` | `number` | No | Number of financial years to check (default: 3, max: 7) |
+
+## Output Fields
+
+| Field | Type | Description |
+|---|---|---|
+| `cin` | string | Company CIN |
+| `companyName` | string | Company name |
+| `complianceStatus` | string | `COMPLIANT`, `PARTIALLY_COMPLIANT`, `DEFAULTER` |
+| `lastAnnualReturn` | string | Period of last MGT-7 filing |
+| `lastFinancialStatement` | string | Period of last AOC-4 filing |
+| `filings` | array | Year-by-year filing records |
+| `filings[].year` | string | Financial year (e.g., `2023-24`) |
+| `filings[].annualReturn` | string | `FILED`, `PENDING`, `N/A` |
+| `filings[].financialStatement` | string | `FILED`, `PENDING`, `N/A` |
+| `defaults` | number | Count of pending/missed filings |
+
+## Example Conversation
+
+**User:** Check MCA compliance for CIN L85110KA1981PLC013115
+
+**Claude:**
+```json
+{
+  "cin": "L85110KA1981PLC013115",
+  "companyName": "INFOSYS LIMITED",
+  "complianceStatus": "COMPLIANT",
+  "lastAnnualReturn": "2023-24",
+  "lastFinancialStatement": "2023-24",
+  "defaults": 0,
+  "filings": [
+    { "year": "2023-24", "annualReturn": "FILED", "financialStatement": "FILED" },
+    { "year": "2022-23", "annualReturn": "FILED", "financialStatement": "FILED" },
+    { "year": "2021-22", "annualReturn": "FILED", "financialStatement": "FILED" }
+  ]
+}
+```
+
+## Edge Cases
+
+| Scenario | Behaviour |
+|---|---|
+| Struck-off company | Returns last known filings; flags as defaulter |
+| Newly incorporated (< 1 year) | No filings expected; `complianceStatus: "COMPLIANT"` |
+| Section 8 company | NGT-7 not required; `annualReturn: "N/A"` |
+| Multiple defaults | `complianceStatus: "DEFAULTER"`, `defaults` count populated |

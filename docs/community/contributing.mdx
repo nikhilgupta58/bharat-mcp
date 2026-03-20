@@ -1,0 +1,79 @@
+---
+title: "Contributing"
+description: "How to contribute to Bharat MCP — code, adapters, translations, and documentation."
+---
+
+## Welcome
+
+Bharat MCP is open source and welcomes contributions. Whether you're adding a new GST tool, writing an adapter for a new data source, translating to a regional language, or fixing a bug — all contributions are valued.
+
+## Getting Started
+
+```bash
+# Fork and clone
+git clone https://github.com/your-username/bharat-mcp
+cd bharat-mcp
+
+# Install dependencies
+npm install
+
+# Copy environment file
+cp .env.example .env
+# Add BHARAT_MCP_API_KEY=sandbox_key
+
+# Run tests
+npm test
+
+# Start dev server
+npm run dev
+```
+
+## Project Structure
+
+```
+bharat-mcp/
+├── packages/
+│   ├── gst-server/       # GST MCP server
+│   ├── mca-server/       # MCA MCP server
+│   └── core/             # Shared types, cache, i18n, adapter chain
+├── docs/                 # Mintlify documentation
+└── docker/               # Docker and compose files
+```
+
+## Types of Contributions
+
+### New Tool
+
+1. Define the tool schema in `core/src/types.ts`
+2. Create the tool class in the appropriate server package
+3. Write an adapter (or mock adapter for testing)
+4. Add tests in `__tests__/`
+5. Add a docs page in `docs/{module}/`
+
+### New Language
+
+1. Copy `packages/core/src/i18n/locales/en.json`
+2. Translate all string values
+3. Register in `packages/core/src/i18n/index.ts`
+4. Add to the `BHARAT_MCP_LANG` config enum
+5. Add a section to `docs/advanced/i18n.mdx`
+
+### Bug Fix
+
+1. Open an issue describing the bug
+2. Write a failing test that reproduces it
+3. Fix the bug
+4. Confirm the test passes
+5. Submit a PR
+
+## Pull Request Guidelines
+
+- Keep PRs focused — one feature or fix per PR
+- Write or update tests for all changes
+- Follow existing code style (`eslint` + `prettier` are configured)
+- Update the relevant docs page if behaviour changes
+- PRs require one approval from a maintainer
+
+## Code of Conduct
+
+Be respectful. This is a community project for Indian business developers — all backgrounds and skill levels welcome.

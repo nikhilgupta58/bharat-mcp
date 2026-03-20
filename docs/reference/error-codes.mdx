@@ -1,0 +1,70 @@
+---
+title: "Error Codes"
+description: "Every error class in Bharat MCP — what triggers it and how to resolve it."
+---
+
+## Error Response Format
+
+All errors follow this structure:
+
+```json
+{
+  "error": {
+    "code": "VALIDATION_ERROR",
+    "message": "Invalid GSTIN format. Expected 15 characters.",
+    "details": { "field": "gstin", "value": "INVALID" }
+  }
+}
+```
+
+## Error Code Reference
+
+### Validation Errors
+
+| Code | Triggers | Resolution |
+|---|---|---|
+| `VALIDATION_ERROR` | Invalid input format (GSTIN, PAN, CIN, etc.) | Check format requirements — see tool reference |
+| `MISSING_REQUIRED_FIELD` | A required parameter was not provided | Add the missing field to your request |
+| `INVALID_GSTIN_FORMAT` | GSTIN is not 15 characters or has wrong structure | GSTIN format: `{2 digits}{10 PAN chars}{1 entity}{Z}{1 check}` |
+| `INVALID_PAN_FORMAT` | PAN is not 10 characters or wrong pattern | PAN format: `AAAAA9999A` (5 alpha, 4 num, 1 alpha) |
+| `INVALID_CIN_FORMAT` | CIN does not match MCA pattern | CIN format: `L85110KA1981PLC013115` |
+| `INVALID_DIN_FORMAT` | DIN is not 8 digits | DIN is exactly 8 numeric digits |
+
+### Not Found Errors
+
+| Code | Triggers | Resolution |
+|---|---|---|
+| `NOT_FOUND` | Entity does not exist in the upstream database | Confirm identifier with the business; may be cancelled/struck-off |
+| `GSTIN_NOT_FOUND` | GSTIN not found in GSTN | Confirm GSTIN with vendor; verify against GST portal |
+| `CIN_NOT_FOUND` | CIN not found in MCA21 | May be a very new registration or incorrect CIN |
+| `DIN_NOT_FOUND` | DIN not found in MCA director registry | Verify DIN with director's official documents |
+
+### Upstream Errors
+
+| Code | Triggers | Resolution |
+|---|---|---|
+| `UPSTREAM_ERROR` | GSTN or MCA API returned 5xx or timed out | Retry after 30–60 seconds |
+| `UPSTREAM_TIMEOUT` | External API did not respond within 8 seconds | Retry with backoff; check GSTN/MCA portal status |
+| `UPSTREAM_UNAVAILABLE` | External API is down | Wait and retry; check https://status.bharatmcp.dev |
+
+### Rate Limiting Errors
+
+| Code | Triggers | Resolution |
+|---|---|---|
+| `RATE_LIMITED` | Too many requests per second | Slow down requests; increase `BHARAT_MCP_RATE_LIMIT` or upgrade plan |
+| `DAILY_QUOTA_EXCEEDED` | Sandbox 500 req/day limit reached | Upgrade to production key or wait until midnight IST |
+
+### Authentication Errors
+
+| Code | Triggers | Resolution |
+|---|---|---|
+| `AUTH_MISSING` | `BHARAT_MCP_API_KEY` not set | Set the environment variable |
+| `AUTH_INVALID` | API key is incorrect or expired | Check key on dashboard; generate a new one |
+| `AUTH_INSUFFICIENT_SCOPE` | Key does not have permission for this tool | Upgrade plan or request additional scope |
+
+### Resolution Errors
+
+| Code | Triggers | Resolution |
+|---|---|---|
+| `RESOLUTION_FAILED` | Entity could not be resolved across modules | Provide additional identifiers (PAN, CIN, or GSTIN) |
+| `LOW_CONFIDENCE_RESOLUTION` | Match found but confidence is LOW | Manually verify the matched entity before proceeding |

@@ -1,0 +1,59 @@
+---
+title: "company_lookup"
+description: "Fetch full company master data from MCA21 by company name or CIN."
+---
+
+## Description
+
+`company_lookup` retrieves the official MCA company master record including registered address, authorised capital, paid-up capital, company category, and current status.
+
+## Input Parameters
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `query` | `string` | Yes | Company name (partial match) or full CIN |
+| `limit` | `number` | No | Max results when searching by name (default: 5, max: 20) |
+
+## Output Fields
+
+| Field | Type | Description |
+|---|---|---|
+| `cin` | string | Corporate Identity Number |
+| `name` | string | Registered company name |
+| `status` | string | `ACTIVE`, `STRUCK_OFF`, `UNDER_LIQUIDATION`, etc. |
+| `category` | string | `Company limited by Shares`, `LLP`, etc. |
+| `incorporationDate` | string | Date of incorporation (ISO 8601) |
+| `registeredState` | string | State of registration |
+| `registeredAddress` | string | Full registered office address |
+| `authorisedCapital` | number | Authorised capital in INR |
+| `paidUpCapital` | number | Paid-up capital in INR |
+| `emailId` | string | Registered email address |
+
+## Example Conversation
+
+**User:** Look up Infosys Limited on MCA
+
+**Claude:**
+```json
+{
+  "cin": "L85110KA1981PLC013115",
+  "name": "INFOSYS LIMITED",
+  "status": "ACTIVE",
+  "category": "Company limited by Shares",
+  "incorporationDate": "1981-07-02",
+  "registeredState": "Karnataka",
+  "registeredAddress": "Electronics City, Hosur Road, Bengaluru - 560100",
+  "authorisedCapital": 1000000000,
+  "paidUpCapital": 414400000,
+  "emailId": "investors@infosys.com"
+}
+```
+
+## Edge Cases
+
+| Scenario | Behaviour |
+|---|---|
+| Multiple name matches | Returns array of results up to `limit` |
+| Struck-off company | Returns record with `status: "STRUCK_OFF"` |
+| CIN not found | Returns `NOT_FOUND` error |
+| Invalid CIN format | Returns `VALIDATION_ERROR` |

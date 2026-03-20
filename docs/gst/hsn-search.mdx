@@ -1,0 +1,68 @@
+---
+title: "hsn_search"
+description: "Search HSN/SAC codes by keyword or code number, including descriptions and chapter headings."
+---
+
+## Description
+
+`hsn_search` lets you find the correct HSN (Harmonised System of Nomenclature) or SAC (Services Accounting Code) for a product or service. You can search by keyword (e.g., "laptop") or by an exact or partial code.
+
+## Input Parameters
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `query` | `string` | Yes | Keyword (e.g., "cotton shirt") or HSN code (e.g., "6109") |
+| `type` | `string` | No | `HSN`, `SAC`, or `ALL` (default: `ALL`) |
+| `limit` | `number` | No | Max results to return (default: 10, max: 50) |
+
+## Output Fields
+
+Each result in the `results` array:
+
+| Field | Type | Description |
+|---|---|---|
+| `code` | string | HSN or SAC code |
+| `type` | string | `HSN` or `SAC` |
+| `description` | string | Short description of the goods/service |
+| `chapter` | string | Chapter heading |
+| `gstRate` | number | Standard GST rate (%) |
+| `cess` | number | Cess percentage, if applicable |
+
+## Example Conversation
+
+**User:** What HSN code should I use for laptops?
+
+**Claude:**
+```json
+{
+  "results": [
+    {
+      "code": "8471",
+      "type": "HSN",
+      "description": "Automatic data processing machines and units thereof",
+      "chapter": "Chapter 84 — Machinery and mechanical appliances",
+      "gstRate": 18,
+      "cess": 0
+    },
+    {
+      "code": "84713010",
+      "type": "HSN",
+      "description": "Laptops, notebooks, sub-notebooks",
+      "chapter": "Chapter 84 — Machinery and mechanical appliances",
+      "gstRate": 18,
+      "cess": 0
+    }
+  ]
+}
+```
+
+*Use HSN 8471 or the more specific 84713010 for laptops. GST rate is 18% with no cess.*
+
+## Edge Cases
+
+| Scenario | Behaviour |
+|---|---|
+| No results found | Returns empty `results` array, no error |
+| Exact code match | Returns single result at top |
+| SAC codes for services | Set `type: "SAC"` for service-specific search |
+| Ambiguous keyword | Returns top 10 closest matches by relevance |

@@ -1,0 +1,66 @@
+---
+title: "gstin_verify"
+description: "Verify a GSTIN's registration status, legal name, and taxpayer details in real time."
+---
+
+## Description
+
+`gstin_verify` queries the GSTN database to confirm a GSTIN is valid and active. It returns the registered legal name, trade name, state, registration date, and taxpayer type.
+
+## Input Parameters
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `gstin` | `string` | Yes | 15-character GSTIN (format: `29ABCDE1234F1Z5`) |
+
+## Output Fields
+
+| Field | Type | Description |
+|---|---|---|
+| `gstin` | string | The queried GSTIN |
+| `status` | string | `ACTIVE`, `CANCELLED`, `SUSPENDED` |
+| `legalName` | string | Registered legal name of the taxpayer |
+| `tradeName` | string | Trade name (may differ from legal name) |
+| `stateCode` | string | 2-digit state code |
+| `state` | string | State name |
+| `registrationDate` | string | Date of GST registration (ISO 8601) |
+| `taxpayerType` | string | `Regular`, `Composition`, `SEZ`, etc. |
+| `lastReturnFiled` | string | Most recent return period filed |
+
+## Example Conversation
+
+**User:** Verify GSTIN 27AAPFU0939F1ZV
+
+**Claude:**
+```json
+{
+  "gstin": "27AAPFU0939F1ZV",
+  "status": "ACTIVE",
+  "legalName": "FLIPKART INDIA PRIVATE LIMITED",
+  "tradeName": "FLIPKART",
+  "stateCode": "27",
+  "state": "Maharashtra",
+  "registrationDate": "2017-07-01",
+  "taxpayerType": "Regular",
+  "lastReturnFiled": "GSTR-3B for Oct 2024"
+}
+```
+
+*Flipkart India Private Limited is an active regular GST taxpayer in Maharashtra, registered since July 2017. Their most recent filing was GSTR-3B for October 2024.*
+
+## Edge Cases
+
+| Scenario | Behaviour |
+|---|---|
+| Invalid format (not 15 chars) | Returns `VALIDATION_ERROR` with format hint |
+| GSTIN not found in GSTN | Returns `status: "NOT_FOUND"` |
+| GSTIN is cancelled | Returns full record with `status: "CANCELLED"` and cancellation date |
+| GSTN API unavailable | Returns `UPSTREAM_ERROR` with retry suggestion |
+| Sandbox vs. production | Sandbox may return mock data for test GSTINs |
+
+## Error Codes
+
+- `VALIDATION_ERROR` — malformed GSTIN string
+- `NOT_FOUND` — GSTIN does not exist in GSTN
+- `UPSTREAM_ERROR` — GSTN API timeout or 5xx
+- `RATE_LIMITED` — too many requests; wait and retry

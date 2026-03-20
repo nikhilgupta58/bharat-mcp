@@ -1,0 +1,96 @@
+---
+title: "त्वरित प्रारंभ (Hindi)"
+description: "2 मिनट में Bharat MCP इंस्टॉल करें और पहली query चलाएं।"
+---
+
+## आवश्यकताएं
+
+- Node.js 18 या उससे ऊपर
+- Claude Desktop (या कोई MCP-compatible client)
+- Bharat MCP API key ([Sandbox key लें →](#api-key))
+
+---
+
+## चरण 1 — इंस्टॉल करें
+
+```bash
+npm install -g bharat-mcp
+```
+
+बिना इंस्टॉल किए चलाएं:
+
+```bash
+npx bharat-mcp
+```
+
+---
+
+## चरण 2 — Sandbox API Key लें
+
+1. [https://bharatmcp.dev/sandbox](https://bharatmcp.dev/sandbox) पर जाएं
+2. Google से sign in करें
+3. Dashboard पर दिखाई `BHARAT_MCP_API_KEY` को copy करें
+
+Sandbox key से आपको प्रतिदिन 500 मुफ्त requests मिलती हैं।
+
+---
+
+## चरण 3 — Claude Desktop Configure करें
+
+Claude Desktop की config file खोलें:
+
+- **macOS:** `~/Library/Application Support/Claude/claude_desktop_config.json`
+- **Windows:** `%APPDATA%\Claude\claude_desktop_config.json`
+
+नीचे दिया हुआ configuration जोड़ें:
+
+```json
+{
+  "mcpServers": {
+    "bharat-mcp": {
+      "command": "npx",
+      "args": ["bharat-mcp"],
+      "env": {
+        "BHARAT_MCP_API_KEY": "आपकी_sandbox_key_यहाँ",
+        "BHARAT_MCP_ENV": "sandbox",
+        "BHARAT_MCP_LANG": "hi"
+      }
+    }
+  }
+}
+```
+
+`BHARAT_MCP_LANG: "hi"` सेट करने से सभी responses हिंदी में आएंगे।
+
+Claude Desktop restart करें।
+
+---
+
+## चरण 4 — पहली Query
+
+Claude Desktop में टाइप करें:
+
+> GSTIN 27AAPFU0939F1ZV सत्यापित करें
+
+Claude `gstin_verify` tool call करेगा और हिंदी में उत्तर देगा:
+
+> "GSTIN 27AAPFU0939F1ZV फ्लिपकार्ट इंडिया प्राइवेट लिमिटेड का है। यह महाराष्ट्र में जुलाई 2017 से पंजीकृत एक सक्रिय नियमित करदाता है।"
+
+---
+
+## GST Tool उदाहरण
+
+| Query | Tool |
+|---|---|
+| "GSTIN 29ABCDE1234F1Z5 verify करो" | `gstin_verify` |
+| "HSN code 6109 का GST rate क्या है?" | `hsn_search` |
+| "इस invoice पर GST calculate करो: ₹50,000, HSN 8471" | `gst_rate_calculator` |
+| "GSTIN 27AAPFU0939F1ZV का return status देखो" | `gst_return_status` |
+
+---
+
+## अगले कदम
+
+- [GST tools →](/gst/overview)
+- [MCA company data →](/mca/overview)
+- [English Quickstart →](/quickstart)

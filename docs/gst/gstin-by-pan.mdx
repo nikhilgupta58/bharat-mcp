@@ -1,0 +1,61 @@
+---
+title: "gstin_by_pan"
+description: "Discover all GSTINs registered under a given PAN number across states."
+---
+
+## Description
+
+`gstin_by_pan` takes a PAN (Permanent Account Number) and returns all GSTINs associated with it. A single business entity may have multiple GSTINs if it operates across multiple states.
+
+## Input Parameters
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `pan` | `string` | Yes | 10-character PAN (e.g., `AAPFU0939F`) |
+
+## Output Fields
+
+| Field | Type | Description |
+|---|---|---|
+| `pan` | string | The queried PAN |
+| `count` | number | Total GSTINs found |
+| `gstins` | array | List of GSTIN records |
+| `gstins[].gstin` | string | 15-character GSTIN |
+| `gstins[].state` | string | State name |
+| `gstins[].stateCode` | string | 2-digit state code |
+| `gstins[].status` | string | `ACTIVE`, `CANCELLED` |
+| `gstins[].legalName` | string | Legal name for this registration |
+
+## Example Conversation
+
+**User:** Find all GSTINs for PAN AAPFU0939F
+
+**Claude:**
+```json
+{
+  "pan": "AAPFU0939F",
+  "count": 3,
+  "gstins": [
+    { "gstin": "27AAPFU0939F1ZV", "state": "Maharashtra", "stateCode": "27", "status": "ACTIVE", "legalName": "FLIPKART INDIA PRIVATE LIMITED" },
+    { "gstin": "29AAPFU0939F1ZT", "state": "Karnataka",   "stateCode": "29", "status": "ACTIVE", "legalName": "FLIPKART INDIA PRIVATE LIMITED" },
+    { "gstin": "07AAPFU0939F1ZX", "state": "Delhi",       "stateCode": "07", "status": "ACTIVE", "legalName": "FLIPKART INDIA PRIVATE LIMITED" }
+  ]
+}
+```
+
+*Flipkart India holds 3 active GSTINs — in Maharashtra, Karnataka, and Delhi.*
+
+## Use Cases
+
+- **Cross-module entity resolution:** Use PAN to link GST registrations with MCA records
+- **Vendor coverage check:** Confirm a supplier is GST-registered in the states where you procure
+- **ITC risk:** Verify supplier registrations are active before claiming input tax credit
+
+## Edge Cases
+
+| Scenario | Behaviour |
+|---|---|
+| PAN with no GST registration | Returns `count: 0`, empty `gstins` array |
+| Cancelled GSTIN in list | Included with `status: "CANCELLED"` |
+| Invalid PAN format | Returns `VALIDATION_ERROR` |
+| Individual PAN (not business) | May return personal GSTIN if registered |

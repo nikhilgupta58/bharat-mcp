@@ -1,0 +1,74 @@
+---
+title: "Risk Scoring"
+description: "Signal weights, confidence levels, and how the vendor risk score is computed."
+---
+
+## Overview
+
+The `risk_score` tool aggregates signals from both GST and MCA modules to produce a 0–100 risk score. A higher score means higher risk.
+
+## Signal Weights
+
+| Signal | Weight | Source |
+|---|---|---|
+| GSTIN status (inactive/cancelled) | 30 | GST Module |
+| GST return filing gaps (> 3 months) | 20 | GST Module |
+| MCA company status (struck off) | 25 | MCA Module |
+| MCA compliance defaults | 15 | MCA Module |
+| Director disqualification | 20 | MCA Module |
+| Entity resolution confidence = LOW | 10 | Cross-Module |
+| Age of business < 6 months | 5 | Cross-Module |
+
+Weights are additive, capped at 100.
+
+## Score Bands
+
+| Score | Band | Recommendation |
+|---|---|---|
+| 0–20 | LOW RISK | Proceed normally |
+| 21–40 | MODERATE RISK | Standard due-diligence |
+| 41–60 | ELEVATED RISK | Enhanced verification recommended |
+| 61–80 | HIGH RISK | Seek additional documentation |
+| 81–100 | CRITICAL RISK | Do not transact without legal review |
+
+## Input Parameters
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `gstin` | `string` | No | GSTIN to score |
+| `cin` | `string` | No | CIN to score |
+| `pan` | `string` | No | PAN to score |
+
+## Output Fields
+
+| Field | Type | Description |
+|---|---|---|
+| `score` | number | 0–100 risk score |
+| `band` | string | Risk band label |
+| `signals` | array | Fired risk signals with individual scores |
+| `signals[].name` | string | Signal name |
+| `signals[].weight` | number | Weight applied |
+| `signals[].detail` | string | Human-readable explanation |
+| `confidence` | string | Score confidence: `HIGH`, `MEDIUM`, `LOW` |
+| `recommendation` | string | Plain-English action recommendation |
+
+## Example
+
+**User:** Score vendor risk for GSTIN 27AAPFU0939F1ZV
+
+**Claude:**
+```json
+{
+  "score": 5,
+  "band": "LOW RISK",
+  "confidence": "HIGH",
+  "recommendation": "No risk signals detected. Proceed with standard onboarding.",
+  "signals": []
+}
+```
+
+## Limitations
+
+- Score is advisory only — not a financial or legal opinion
+- Data freshness depends on GSTN and MCA sync cadence
+- Shell companies with clean filings may score low despite structural risk

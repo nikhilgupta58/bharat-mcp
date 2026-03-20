@@ -1,0 +1,73 @@
+---
+title: "Entity Resolution"
+description: "How Bharat MCP resolves GSTIN → PAN → CIN to build a unified business entity profile."
+---
+
+## Overview
+
+Entity resolution bridges the GST and MCA data silos. A single business entity may have multiple identifiers across government databases:
+
+- **GSTIN** — GST registration (one per state)
+- **PAN** — Permanent Account Number (one per legal entity)
+- **CIN** — Company registration (for companies/LLPs only)
+
+The `entity_resolve` cross-module tool chains these together automatically.
+
+## Resolution Chain
+
+```
+Input: GSTIN  ──────────────────────────────────────┐
+                                                     ▼
+              gstin_verify(gstin) → extract PAN ─── PAN
+                                                     │
+              gstin_by_pan(pan) → all GSTINs ◄───────┘
+                                                     │
+              director_search(pan) → DIN ────────────▼
+                                                    DIN
+                                                     │
+              director_network(din) → CINs ──────────▼
+                                                    CINs
+                                                     │
+              company_lookup(cin) ───────────────────▼
+                                              Unified Profile
+```
+
+## Input Parameters
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `gstin` | `string` | No | Start from a GSTIN |
+| `pan` | `string` | No | Start from a PAN |
+| `cin` | `string` | No | Start from a CIN |
+
+At least one identifier must be provided.
+
+## Output Fields
+
+| Field | Type | Description |
+|---|---|---|
+| `pan` | string | Resolved PAN |
+| `gstins` | array | All GSTINs under this PAN |
+| `companies` | array | MCA company records linked to this PAN |
+| `directors` | array | Directors associated with this entity |
+| `confidence` | string | `HIGH`, `MEDIUM`, `LOW` |
+| `resolutionPath` | array | Steps taken to resolve (audit trail) |
+
+## Confidence Levels
+
+| Level | Meaning |
+|---|---|
+| `HIGH` | PAN matched directly; CIN confirmed in MCA |
+| `MEDIUM` | PAN inferred from GSTIN; CIN found by name match |
+| `LOW` | Partial match; manual review recommended |
+
+## Example
+
+**User:** Resolve entity for GSTIN 27AAPFU0939F1ZV
+
+Claude will:
+1. Call `gstin_verify` → get PAN `AAPFU0939F`
+2. Call `gstin_by_pan(AAPFU0939F)` → get all 3 GSTINs
+3. Call `director_search(pan: AAPFU0939F)` → match to CIN
+4. Call `company_lookup + compliance_check` on the CIN
+5. Return the unified profile with `confidence: "HIGH"`

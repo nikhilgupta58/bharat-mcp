@@ -1,0 +1,59 @@
+---
+title: "gst_return_status"
+description: "Check GSTR-1, GSTR-3B, and annual return filing status for any GSTIN."
+---
+
+## Description
+
+`gst_return_status` fetches the filing history and compliance status for a GSTIN across all major return types. Useful for vendor due-diligence and confirming a supplier's GST compliance before input tax credit claims.
+
+## Input Parameters
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| `gstin` | `string` | Yes | 15-character GSTIN |
+| `returnType` | `string` | No | `GSTR1`, `GSTR3B`, `GSTR9`, or `ALL` (default: `ALL`) |
+| `fromPeriod` | `string` | No | Start period in `MMYYYY` format (e.g., `042024`) |
+| `toPeriod` | `string` | No | End period in `MMYYYY` format |
+
+## Output Fields
+
+| Field | Type | Description |
+|---|---|---|
+| `gstin` | string | The queried GSTIN |
+| `filingStatus` | string | `COMPLIANT`, `PARTIALLY_COMPLIANT`, `NON_COMPLIANT` |
+| `returns` | array | List of return filing records |
+| `returns[].returnType` | string | `GSTR1`, `GSTR3B`, `GSTR9` |
+| `returns[].period` | string | Filing period (e.g., `Oct 2024`) |
+| `returns[].status` | string | `FILED`, `PENDING`, `NIL_FILED` |
+| `returns[].filedDate` | string | Date filed (ISO 8601), null if pending |
+| `pendingReturns` | number | Count of overdue returns |
+
+## Example Conversation
+
+**User:** Check GST return filing status for GSTIN 27AAPFU0939F1ZV
+
+**Claude:**
+```json
+{
+  "gstin": "27AAPFU0939F1ZV",
+  "filingStatus": "COMPLIANT",
+  "pendingReturns": 0,
+  "returns": [
+    { "returnType": "GSTR3B", "period": "Oct 2024", "status": "FILED", "filedDate": "2024-11-20" },
+    { "returnType": "GSTR1",  "period": "Oct 2024", "status": "FILED", "filedDate": "2024-11-11" },
+    { "returnType": "GSTR3B", "period": "Sep 2024", "status": "FILED", "filedDate": "2024-10-21" }
+  ]
+}
+```
+
+*This GSTIN is fully compliant — all GSTR-1 and GSTR-3B returns are filed on time with no pending obligations.*
+
+## Edge Cases
+
+| Scenario | Behaviour |
+|---|---|
+| GSTIN is newly registered | May show no returns yet; `pendingReturns: 0` |
+| Cancelled GSTIN | Returns filings up to cancellation date |
+| Composition taxpayer | Shows GSTR-4 instead of GSTR-1/3B |
+| Annual return (GSTR-9) | Only available for regular taxpayers with turnover > ₹2Cr |
