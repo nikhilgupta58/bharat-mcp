@@ -1,0 +1,53 @@
+{
+  "gstin_verify": {
+    "description": "Verifies a GSTIN and returns registration details, compliance status, and business information.",
+    "not_found": "No GSTIN found for \"{{id}}\". Verify the format: 15 characters, starting with state code (01-37).",
+    "partial": "Some data unavailable from {{source}}. Partial results shown.",
+    "unavailable": "GSTN is currently unavailable. Showing cached data from {{date}}. Some info may be outdated."
+  },
+  "hsn_search": {
+    "description": "Searches HSN/SAC codes by code number or text description.",
+    "not_found": "No HSN codes match \"{{query}}\". Try a broader term or numeric code."
+  },
+  "gst_rate_calculator": {
+    "description": "Calculates GST rates (CGST, SGST/IGST, cess) for a given HSN code and supply type."
+  },
+  "gst_return_status": {
+    "description": "Checks GST return filing status for a GSTIN by financial year."
+  },
+  "gstin_by_pan": {
+    "description": "Lists all GSTINs registered against a PAN number."
+  },
+  "company_lookup": {
+    "description": "Looks up a company on the MCA registry by CIN, name, or PAN.",
+    "not_found": "No company found matching \"{{id}}\". Try searching by exact CIN or company name."
+  },
+  "director_search": {
+    "description": "Searches for director information by DIN (Director Identification Number)."
+  },
+  "cin_validate": {
+    "description": "Validates a CIN and extracts embedded company metadata."
+  },
+  "compliance_check": {
+    "description": "Checks MCA compliance status including filing deadlines and overdue returns."
+  },
+  "director_network": {
+    "description": "Maps all companies associated with a director by DIN."
+  },
+  "risk_score": {
+    "high_confidence": "Risk Score: {{score}}/10 (High Confidence) — {{available}}/{{total}} signals available.",
+    "low_confidence": "Risk Score: {{score}}/10 (Low Confidence) — {{available}}/{{total}} signals available. Assess with caution.",
+    "unavailable": "Risk scoring unavailable. Raw data provided."
+  },
+  "error": {
+    "not_found": "No {{entity}} found for \"{{id}}\".",
+    "validation": "Invalid {{field}} format.",
+    "upstream_unavailable": "{{source}} is currently unavailable. Try again shortly.",
+    "rate_limited": "Rate limited by {{source}}. Please wait before retrying.",
+    "auth_failed": "Authentication failed. Check your SANDBOX_API_KEY."
+  },
+  "meta": {
+    "source_attribution": "Data from {{source}}, retrieved {{date}}.",
+    "cached_warning": "Showing cached data from {{date}}. Some information may be outdated."
+  }
+}
