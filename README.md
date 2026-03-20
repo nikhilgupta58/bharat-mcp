@@ -11,13 +11,19 @@
 
 ## Install in Claude Desktop
 
-**One command:**
+### Step 1: Get your free API key
+
+Sign up at [sandbox.co.in](https://sandbox.co.in) and copy your API key + secret from the dashboard.
+
+### Step 2: Add to Claude Desktop
+
+Run this to see the full config:
 
 ```bash
 npx @bharat-mcp/server --setup
 ```
 
-This prints the config you need. Or manually add to your Claude Desktop config:
+Or add directly to your config file:
 
 **macOS:** `~/Library/Application Support/Claude/claude_desktop_config.json`
 **Windows:** `%APPDATA%\Claude\claude_desktop_config.json`
@@ -27,15 +33,19 @@ This prints the config you need. Or manually add to your Claude Desktop config:
   "mcpServers": {
     "bharat-mcp": {
       "command": "npx",
-      "args": ["-y", "@bharat-mcp/server@latest"]
+      "args": ["-y", "@bharat-mcp/server@latest"],
+      "env": {
+        "SANDBOX_API_KEY": "your-key-from-sandbox.co.in",
+        "SANDBOX_API_SECRET": "your-secret-from-sandbox.co.in"
+      }
     }
   }
 }
 ```
 
-Then **restart Claude Desktop**. That's it — 10 India business tools are now available.
+### Step 3: Restart Claude Desktop
 
-> Works immediately with mock data. Add a [Sandbox.co.in](#getting-real-data) API key for real government data.
+That's it — 10 India business tools with **real government data** are now available.
 
 ---
 
@@ -70,32 +80,9 @@ Open Claude Desktop and ask:
 
 ---
 
-## Getting Real Data
+## Data Source
 
-Without an API key, Bharat MCP uses curated mock data — perfect for demos and evaluation.
-
-For **real government data**, get a free API key from [Sandbox.co.in](https://sandbox.co.in):
-
-1. Sign up at [sandbox.co.in](https://sandbox.co.in) (free trial available)
-2. Copy your API key and secret from the dashboard
-3. Update your Claude Desktop config:
-
-```json
-{
-  "mcpServers": {
-    "bharat-mcp": {
-      "command": "npx",
-      "args": ["-y", "@bharat-mcp/server@latest"],
-      "env": {
-        "SANDBOX_API_KEY": "your-key",
-        "SANDBOX_API_SECRET": "your-secret"
-      }
-    }
-  }
-}
-```
-
-4. Restart Claude Desktop
+Bharat MCP uses [Sandbox.co.in](https://sandbox.co.in) APIs for real-time access to Indian government registries (GSTN, MCA). A free API key is required — sign up takes 2 minutes.
 
 ---
 

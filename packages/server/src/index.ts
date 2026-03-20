@@ -45,17 +45,33 @@ if (process.argv.includes('--setup')) {
       'bharat-mcp': {
         command: 'npx',
         args: ['-y', '@bharat-mcp/server@latest'],
+        env: {
+          SANDBOX_API_KEY: 'your-key-from-sandbox.co.in',
+          SANDBOX_API_SECRET: 'your-secret-from-sandbox.co.in',
+        },
       },
     },
   }
-  console.log('\nAdd this to your Claude Desktop config:\n')
-  console.log('macOS: ~/Library/Application Support/Claude/claude_desktop_config.json')
-  console.log('Windows: %APPDATA%\\Claude\\claude_desktop_config.json\n')
+  console.log('\n🇮🇳 भारत MCP — India\'s Business Brain for AI\n')
+  console.log('1. Get your free API key at https://sandbox.co.in')
+  console.log('2. Add this to your Claude Desktop config:\n')
+  console.log('   macOS: ~/Library/Application Support/Claude/claude_desktop_config.json')
+  console.log('   Windows: %APPDATA%\\Claude\\claude_desktop_config.json\n')
   console.log(JSON.stringify(config, null, 2))
-  console.log('\nThen restart Claude Desktop.\n')
-  console.log('For real data, add env vars:')
-  console.log('  "env": { "SANDBOX_API_KEY": "your-key", "SANDBOX_API_SECRET": "your-secret" }\n')
+  console.log('\n3. Replace the API key and secret with your real credentials')
+  console.log('4. Restart Claude Desktop\n')
   process.exit(0)
+}
+
+// Require Sandbox API key — no mock mode
+if (!process.env.SANDBOX_API_KEY) {
+  console.error('\n❌ SANDBOX_API_KEY is required.\n')
+  console.error('Bharat MCP uses Sandbox.co.in for real Indian government data.')
+  console.error('Get your free API key at: https://sandbox.co.in\n')
+  console.error('Then set it in your Claude Desktop config:')
+  console.error('  "env": { "SANDBOX_API_KEY": "your-key", "SANDBOX_API_SECRET": "your-secret" }\n')
+  console.error('Run: npx @bharat-mcp/server --setup  for full config.\n')
+  process.exit(1)
 }
 
 function createBharatServer(options?: {
@@ -72,22 +88,26 @@ function createBharatServer(options?: {
   const cache = new CacheLayer(options?.redisUrl)
   const i18n = new I18nService(options?.locale || 'en')
 
-  // GST adapter chains
-  const gstAdapters: any[] = []
-  if (options?.sandboxApiKey) {
-    gstAdapters.push(new SandboxGSTAdapter(options.sandboxApiKey, options.sandboxApiSecret || ''))
-  }
-  gstAdapters.push(new GSTMockAdapter())
-  const gstChain = new AdapterChain(gstAdapters) as any
+  // Sandbox API key is guaranteed to exist (checked at startup)
+  const sandboxKey = options?.sandboxApiKey || ''
+  const sandboxSecret = options?.sandboxApiSecret || ''
+
+  // GST adapter chain — Sandbox only, no mock fallback
+  const gstChain = new AdapterChain([
+    new SandboxGSTAdapter(sandboxKey, sandboxSecret)
+  ]) as any
 
   // GST tools
   const gstinVerify = new GSTINVerifyTool(cache, gstChain, i18n)
   const hsnSearch = new HSNSearchTool()
   const gstRateCalc = new GSTRateCalcTool()
-  const gstReturnStatus = new GSTReturnStatusTool(cache, new AdapterChain([new GSTReturnStatusMockAdapter()]) as any, i18n)
-  const gstinByPAN = new GSTINByPANTool(cache, new AdapterChain([new GSTINByPANMockAdapter()]) as any, i18n)
+  // TODO: Wire these to Sandbox API when endpoints available
+  const gstReturnStatus = new GSTReturnStatusTool(cache, new AdapterChain([new SandboxGSTAdapter(sandboxKey, sandboxSecret)]) as any, i18n)
+  const gstinByPAN = new GSTINByPANTool(cache, new AdapterChain([new SandboxGSTAdapter(sandboxKey, sandboxSecret)]) as any, i18n)
 
-  // MCA adapter chains
+  // MCA adapter chains — Sandbox for real data
+  // TODO: Add SandboxMCAAdapter when MCA endpoints are wired
+  // For now, MCA tools use mock adapters as Sandbox MCA integration is pending
   const companyAdapter = new AdapterChain([new MCACompanyMockAdapter()]) as any
   const directorAdapter = new AdapterChain([new MCADirectorMockAdapter()]) as any
   const complianceAdapter = new AdapterChain([new MCAComplianceMockAdapter()]) as any
