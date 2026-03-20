@@ -1,122 +1,168 @@
-[
-  {
-    "gstin": "27AABCU9603R1ZN",
-    "legalName": "UNISON CHEMICALS PRIVATE LIMITED",
-    "tradeName": "Unison Chemicals",
-    "status": "Active",
-    "registrationDate": "2017-07-01",
-    "lastUpdated": "2024-04-10",
-    "constitutionOfBusiness": "Private Limited Company",
-    "taxpayerType": "Regular",
-    "gstinType": "Regular",
-    "address": "Plot 42, MIDC Andheri East, Mumbai, Maharashtra",
-    "state": "Maharashtra",
-    "pincode": "400093",
-    "natureOfBusiness": ["Wholesale Business", "Manufacturer"]
-  },
-  {
-    "gstin": "07AABCU9603R2ZO",
-    "legalName": "UNISON CHEMICALS PRIVATE LIMITED",
-    "tradeName": "Unison Chemicals Delhi",
-    "status": "Active",
-    "registrationDate": "2018-03-15",
-    "lastUpdated": "2024-04-10",
-    "constitutionOfBusiness": "Private Limited Company",
-    "taxpayerType": "Regular",
-    "gstinType": "Regular",
-    "address": "23 Nehru Place, New Delhi",
-    "state": "Delhi",
-    "pincode": "110019",
-    "natureOfBusiness": ["Wholesale Business", "Retail Business"]
-  },
-  {
-    "gstin": "29AAKCS7169P1Z7",
-    "legalName": "SRIDHAR CONSTRUCTIONS",
-    "tradeName": "Sridhar Constructions",
-    "status": "Cancelled",
-    "registrationDate": "2018-04-01",
-    "lastUpdated": "2023-06-20",
-    "constitutionOfBusiness": "Proprietorship",
-    "taxpayerType": "Regular",
-    "gstinType": "Regular",
-    "address": "12 MG Road, Bengaluru, Karnataka",
-    "state": "Karnataka",
-    "pincode": "560001",
-    "natureOfBusiness": ["Works Contract"]
-  },
-  {
-    "gstin": "06AAKCS7169P2ZE",
-    "legalName": "SRIDHAR CONSTRUCTIONS",
-    "tradeName": "Sridhar Constructions Haryana",
-    "status": "Suspended",
-    "registrationDate": "2019-01-10",
-    "lastUpdated": "2024-01-05",
-    "constitutionOfBusiness": "Proprietorship",
-    "taxpayerType": "Regular",
-    "gstinType": "Regular",
-    "address": "Sector 14, Gurugram, Haryana",
-    "state": "Haryana",
-    "pincode": "122001",
-    "natureOfBusiness": ["Works Contract", "Retail Business"]
-  },
-  {
-    "gstin": "33AAACT2727Q1Z3",
-    "legalName": "TAMILNADU TRADERS",
-    "tradeName": "TN Traders",
-    "status": "Active",
-    "registrationDate": "2017-09-12",
-    "lastUpdated": "2024-03-01",
-    "constitutionOfBusiness": "Partnership",
-    "taxpayerType": "Composition",
-    "gstinType": "Regular",
-    "address": "45 Anna Salai, Chennai, Tamil Nadu",
-    "state": "Tamil Nadu",
-    "pincode": "600002",
-    "natureOfBusiness": ["Retail Business", "Food and Beverages"]
-  },
-  {
-    "gstin": "19AAACT2727Q2ZS",
-    "legalName": "TAMILNADU TRADERS",
-    "tradeName": "TN Traders WB",
-    "status": "Active",
-    "registrationDate": "2020-06-01",
-    "lastUpdated": "2024-03-01",
-    "constitutionOfBusiness": "Partnership",
-    "taxpayerType": "Regular",
-    "gstinType": "Regular",
-    "address": "14 Park Street, Kolkata, West Bengal",
-    "state": "West Bengal",
-    "pincode": "700016",
-    "natureOfBusiness": ["Retail Business"]
-  },
-  {
-    "gstin": "24AAGCM9953R1ZJ",
-    "legalName": "GUJARAT METAL CORPORATION",
-    "tradeName": "Gujarat Metals",
-    "status": "Active",
-    "registrationDate": "2017-07-01",
-    "lastUpdated": "2024-02-14",
-    "constitutionOfBusiness": "Private Limited Company",
-    "taxpayerType": "Regular",
-    "gstinType": "Regular",
-    "address": "GIDC Phase 2, Vatva, Ahmedabad, Gujarat",
-    "state": "Gujarat",
-    "pincode": "382445",
-    "natureOfBusiness": ["Manufacturer", "Exporter"]
-  },
-  {
-    "gstin": "09AAGCM9953R2ZA",
-    "legalName": "GUJARAT METAL CORPORATION",
-    "tradeName": "Gujarat Metals UP",
-    "status": "Active",
-    "registrationDate": "2021-11-05",
-    "lastUpdated": "2024-02-14",
-    "constitutionOfBusiness": "Private Limited Company",
-    "taxpayerType": "Regular",
-    "gstinType": "Regular",
-    "address": "Industrial Area, Kanpur, Uttar Pradesh",
-    "state": "Uttar Pradesh",
-    "pincode": "208001",
-    "natureOfBusiness": ["Wholesale Business", "Manufacturer"]
-  }
-]
+{
+  "gstinFixtures": [
+    {
+      "gstin": "27AABCU9603R1ZN",
+      "legalName": "UNISON CHEMICALS PRIVATE LIMITED",
+      "tradeName": "Unison Chemicals",
+      "status": "Active",
+      "registrationDate": "2017-07-01",
+      "lastUpdated": "2024-04-10",
+      "constitutionOfBusiness": "Private Limited Company",
+      "taxpayerType": "Regular",
+      "gstinType": "Regular",
+      "address": "Plot 42, MIDC Andheri East, Mumbai, Maharashtra",
+      "state": "Maharashtra",
+      "pincode": "400093",
+      "natureOfBusiness": ["Wholesale Business", "Manufacturer"]
+    },
+    {
+      "gstin": "07AABCU9603R2ZO",
+      "legalName": "UNISON CHEMICALS PRIVATE LIMITED",
+      "tradeName": "Unison Chemicals Delhi",
+      "status": "Active",
+      "registrationDate": "2018-03-15",
+      "lastUpdated": "2024-04-10",
+      "constitutionOfBusiness": "Private Limited Company",
+      "taxpayerType": "Regular",
+      "gstinType": "Regular",
+      "address": "23 Nehru Place, New Delhi",
+      "state": "Delhi",
+      "pincode": "110019",
+      "natureOfBusiness": ["Wholesale Business", "Retail Business"]
+    },
+    {
+      "gstin": "29AAKCS7169P1Z7",
+      "legalName": "SRIDHAR CONSTRUCTIONS",
+      "tradeName": "Sridhar Constructions",
+      "status": "Cancelled",
+      "registrationDate": "2018-04-01",
+      "lastUpdated": "2023-06-20",
+      "constitutionOfBusiness": "Proprietorship",
+      "taxpayerType": "Regular",
+      "gstinType": "Regular",
+      "address": "12 MG Road, Bengaluru, Karnataka",
+      "state": "Karnataka",
+      "pincode": "560001",
+      "natureOfBusiness": ["Works Contract"]
+    },
+    {
+      "gstin": "06AAKCS7169P2ZE",
+      "legalName": "SRIDHAR CONSTRUCTIONS",
+      "tradeName": "Sridhar Constructions Haryana",
+      "status": "Suspended",
+      "registrationDate": "2019-01-10",
+      "lastUpdated": "2024-01-05",
+      "constitutionOfBusiness": "Proprietorship",
+      "taxpayerType": "Regular",
+      "gstinType": "Regular",
+      "address": "Sector 14, Gurugram, Haryana",
+      "state": "Haryana",
+      "pincode": "122001",
+      "natureOfBusiness": ["Works Contract", "Retail Business"]
+    },
+    {
+      "gstin": "33AAACT2727Q1Z3",
+      "legalName": "TAMILNADU TRADERS",
+      "tradeName": "TN Traders",
+      "status": "Active",
+      "registrationDate": "2017-09-12",
+      "lastUpdated": "2024-03-01",
+      "constitutionOfBusiness": "Partnership",
+      "taxpayerType": "Composition",
+      "gstinType": "Regular",
+      "address": "45 Anna Salai, Chennai, Tamil Nadu",
+      "state": "Tamil Nadu",
+      "pincode": "600002",
+      "natureOfBusiness": ["Retail Business", "Food and Beverages"]
+    },
+    {
+      "gstin": "19AAACT2727Q2ZS",
+      "legalName": "TAMILNADU TRADERS",
+      "tradeName": "TN Traders WB",
+      "status": "Active",
+      "registrationDate": "2020-06-01",
+      "lastUpdated": "2024-03-01",
+      "constitutionOfBusiness": "Partnership",
+      "taxpayerType": "Regular",
+      "gstinType": "Regular",
+      "address": "14 Park Street, Kolkata, West Bengal",
+      "state": "West Bengal",
+      "pincode": "700016",
+      "natureOfBusiness": ["Retail Business"]
+    },
+    {
+      "gstin": "24AAGCM9953R1ZJ",
+      "legalName": "GUJARAT METAL CORPORATION",
+      "tradeName": "Gujarat Metals",
+      "status": "Active",
+      "registrationDate": "2017-07-01",
+      "lastUpdated": "2024-02-14",
+      "constitutionOfBusiness": "Private Limited Company",
+      "taxpayerType": "Regular",
+      "gstinType": "Regular",
+      "address": "GIDC Phase 2, Vatva, Ahmedabad, Gujarat",
+      "state": "Gujarat",
+      "pincode": "382445",
+      "natureOfBusiness": ["Manufacturer", "Exporter"]
+    },
+    {
+      "gstin": "09AAGCM9953R2ZA",
+      "legalName": "GUJARAT METAL CORPORATION",
+      "tradeName": "Gujarat Metals UP",
+      "status": "Active",
+      "registrationDate": "2021-11-05",
+      "lastUpdated": "2024-02-14",
+      "constitutionOfBusiness": "Private Limited Company",
+      "taxpayerType": "Regular",
+      "gstinType": "Regular",
+      "address": "Industrial Area, Kanpur, Uttar Pradesh",
+      "state": "Uttar Pradesh",
+      "pincode": "208001",
+      "natureOfBusiness": ["Wholesale Business", "Manufacturer"]
+    }
+  ],
+  "returnStatusFixtures": [
+    {
+      "gstin": "27AABCU9603R1ZN",
+      "returns": [
+        { "period": "042024", "type": "GSTR1", "status": "Filed", "filedDate": "2024-05-11" },
+        { "period": "042024", "type": "GSTR3B", "status": "Filed", "filedDate": "2024-05-20" },
+        { "period": "032024", "type": "GSTR1", "status": "Filed", "filedDate": "2024-04-12" },
+        { "period": "032024", "type": "GSTR3B", "status": "Filed", "filedDate": "2024-04-21" },
+        { "period": "022024", "type": "GSTR1", "status": "Filed", "filedDate": "2024-03-11" },
+        { "period": "022024", "type": "GSTR3B", "status": "Filed", "filedDate": "2024-03-20" },
+        { "period": "2023-24", "type": "GSTR9", "status": "Not Filed" }
+      ]
+    },
+    {
+      "gstin": "29AAKCS7169P1Z7",
+      "returns": [
+        { "period": "042024", "type": "GSTR1", "status": "Not Filed" },
+        { "period": "042024", "type": "GSTR3B", "status": "Not Filed" },
+        { "period": "032024", "type": "GSTR1", "status": "Filed", "filedDate": "2024-04-15" },
+        { "period": "032024", "type": "GSTR3B", "status": "Filed", "filedDate": "2024-04-22" },
+        { "period": "2023-24", "type": "GSTR9", "status": "NA" }
+      ]
+    },
+    {
+      "gstin": "33AAACT2727Q1Z3",
+      "returns": [
+        { "period": "042024", "type": "GSTR1", "status": "Filed", "filedDate": "2024-05-10" },
+        { "period": "042024", "type": "GSTR3B", "status": "Filed", "filedDate": "2024-05-19" },
+        { "period": "032024", "type": "GSTR1", "status": "Filed", "filedDate": "2024-04-10" },
+        { "period": "032024", "type": "GSTR3B", "status": "Filed", "filedDate": "2024-04-19" },
+        { "period": "2023-24", "type": "GSTR9", "status": "Filed", "filedDate": "2024-12-31" }
+      ]
+    },
+    {
+      "gstin": "24AAGCM9953R1ZJ",
+      "returns": [
+        { "period": "042024", "type": "GSTR1", "status": "Filed", "filedDate": "2024-05-09" },
+        { "period": "042024", "type": "GSTR3B", "status": "Filed", "filedDate": "2024-05-18" },
+        { "period": "032024", "type": "GSTR1", "status": "Filed", "filedDate": "2024-04-11" },
+        { "period": "032024", "type": "GSTR3B", "status": "Not Filed" },
+        { "period": "2023-24", "type": "GSTR9", "status": "Not Filed" }
+      ]
+    }
+  ]
+}
