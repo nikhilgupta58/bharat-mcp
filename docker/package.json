@@ -1,0 +1,19 @@
+{
+  "name": "@bharat-mcp/docker",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "build": "tsc",
+    "start": "node combined-server.js"
+  },
+  "dependencies": {
+    "@bharat-mcp/core": "workspace:*",
+    "@bharat-mcp/gst": "workspace:*",
+    "@bharat-mcp/mca": "workspace:*",
+    "@modelcontextprotocol/sdk": "^1.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "*"
+  }
+}
