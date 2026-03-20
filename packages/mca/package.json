@@ -14,5 +14,8 @@
   "dependencies": {
     "@bharat-mcp/core": "workspace:*",
     "@modelcontextprotocol/sdk": "^1.0.0"
+  },
+  "devDependencies": {
+    "vitest": "*"
   }
 }

@@ -1,0 +1,316 @@
+{
+  "companies": [
+    {
+      "cin": "U72200KA2009PTC049889",
+      "companyName": "INFOSYS BPO PRIVATE LIMITED",
+      "registrationNumber": "049889",
+      "companyCategory": "Company limited by Shares",
+      "companySubcategory": "Non-govt company",
+      "classOfCompany": "Private",
+      "dateOfIncorporation": "2009-03-15",
+      "registeredAddress": "Electronics City, Hosur Road, Bangalore, Karnataka 560100",
+      "email": "compliance@infosysbpo.com",
+      "authorizedCapital": 100000000,
+      "paidUpCapital": 75000000,
+      "companyStatus": "Active",
+      "lastAGMDate": "2023-09-30",
+      "lastBalanceSheetDate": "2023-03-31",
+      "complianceStatus": "Compliant",
+      "whetherListed": false,
+      "pan": "AAACI1234A"
+    },
+    {
+      "cin": "L17110MH1973PLC019786",
+      "companyName": "RELIANCE INDUSTRIES LIMITED",
+      "registrationNumber": "019786",
+      "companyCategory": "Company limited by Shares",
+      "companySubcategory": "Non-govt company",
+      "classOfCompany": "Public",
+      "dateOfIncorporation": "1973-05-08",
+      "registeredAddress": "3rd Floor, Maker Chambers IV, 222 Nariman Point, Mumbai, Maharashtra 400021",
+      "email": "investor.relations@ril.com",
+      "authorizedCapital": 14000000000,
+      "paidUpCapital": 13500000000,
+      "companyStatus": "Active",
+      "lastAGMDate": "2023-08-28",
+      "lastBalanceSheetDate": "2023-03-31",
+      "complianceStatus": "Compliant",
+      "whetherListed": true,
+      "pan": "AAACR5055K"
+    },
+    {
+      "cin": "U51909DL2010PTC205678",
+      "companyName": "ALPHA TRADING PRIVATE LIMITED",
+      "registrationNumber": "205678",
+      "companyCategory": "Company limited by Shares",
+      "companySubcategory": "Non-govt company",
+      "classOfCompany": "Private",
+      "dateOfIncorporation": "2010-07-20",
+      "registeredAddress": "12, Connaught Place, New Delhi, Delhi 110001",
+      "email": "info@alphatrading.co.in",
+      "authorizedCapital": 1000000,
+      "paidUpCapital": 500000,
+      "companyStatus": "Strike Off",
+      "lastAGMDate": "2019-09-30",
+      "lastBalanceSheetDate": "2019-03-31",
+      "complianceStatus": "Non-Compliant",
+      "whetherListed": false,
+      "pan": "AAACA9876B"
+    },
+    {
+      "cin": "U65910TN2015PTC101234",
+      "companyName": "CHENNAI FINTECH PRIVATE LIMITED",
+      "registrationNumber": "101234",
+      "companyCategory": "Company limited by Shares",
+      "companySubcategory": "Non-govt company",
+      "classOfCompany": "Private",
+      "dateOfIncorporation": "2015-11-12",
+      "registeredAddress": "No.5, Anna Salai, Chennai, Tamil Nadu 600002",
+      "email": "directors@chennaifin.com",
+      "authorizedCapital": 5000000,
+      "paidUpCapital": 5000000,
+      "companyStatus": "Dormant",
+      "lastAGMDate": "2022-09-30",
+      "lastBalanceSheetDate": "2022-03-31",
+      "complianceStatus": "Partial",
+      "whetherListed": false,
+      "pan": "AAACC5432D"
+    },
+    {
+      "cin": "U45200GJ2008PTC053421",
+      "companyName": "GUJARAT INFRA PRIVATE LIMITED",
+      "registrationNumber": "053421",
+      "companyCategory": "Company limited by Shares",
+      "companySubcategory": "Non-govt company",
+      "classOfCompany": "Private",
+      "dateOfIncorporation": "2008-04-03",
+      "registeredAddress": "Plot No. 22, GIDC Industrial Estate, Ahmedabad, Gujarat 380015",
+      "email": "legal@gujaratinfra.in",
+      "authorizedCapital": 50000000,
+      "paidUpCapital": 30000000,
+      "companyStatus": "Under Liquidation",
+      "lastAGMDate": "2021-09-30",
+      "lastBalanceSheetDate": "2021-03-31",
+      "complianceStatus": "Non-Compliant",
+      "whetherListed": false,
+      "pan": "AAACG2211F"
+    },
+    {
+      "cin": "AAA-1234",
+      "companyName": "TECHBRIDGE LLP",
+      "registrationNumber": "AAA-1234",
+      "companyCategory": "Limited Liability Partnership",
+      "companySubcategory": "Non-govt company",
+      "classOfCompany": "LLP",
+      "dateOfIncorporation": "2016-02-28",
+      "registeredAddress": "Tower B, Cyber City, Gurugram, Haryana 122002",
+      "email": "partners@techbridge.in",
+      "authorizedCapital": 0,
+      "paidUpCapital": 10000000,
+      "companyStatus": "Active",
+      "lastAGMDate": null,
+      "lastBalanceSheetDate": "2023-03-31",
+      "complianceStatus": "Compliant",
+      "whetherListed": false,
+      "pan": "AAATL9900H",
+      "isLLP": true
+    },
+    {
+      "cin": "U74999MH2005PLC154321",
+      "companyName": "MULTIVENTURES PUBLIC LIMITED",
+      "registrationNumber": "154321",
+      "companyCategory": "Company limited by Shares",
+      "companySubcategory": "Non-govt company",
+      "classOfCompany": "Public",
+      "dateOfIncorporation": "2005-06-15",
+      "registeredAddress": "Fort Area, Marine Lines, Mumbai, Maharashtra 400002",
+      "email": "cs@multiventures.com",
+      "authorizedCapital": 200000000,
+      "paidUpCapital": 150000000,
+      "companyStatus": "Active",
+      "lastAGMDate": "2023-08-15",
+      "lastBalanceSheetDate": "2023-03-31",
+      "complianceStatus": "Compliant",
+      "whetherListed": true,
+      "pan": "AAACM7788J"
+    },
+    {
+      "cin": "U63090WB2018PTC223456",
+      "companyName": "KOLKATA LOGISTICS PRIVATE LIMITED",
+      "registrationNumber": "223456",
+      "companyCategory": "Company limited by Shares",
+      "companySubcategory": "Non-govt company",
+      "classOfCompany": "Private",
+      "dateOfIncorporation": "2018-09-10",
+      "registeredAddress": "Salt Lake Sector V, Kolkata, West Bengal 700091",
+      "email": "accounts@kolkatalogistics.co.in",
+      "authorizedCapital": 10000000,
+      "paidUpCapital": 8000000,
+      "companyStatus": "Active",
+      "lastAGMDate": "2022-09-30",
+      "lastBalanceSheetDate": "2022-03-31",
+      "complianceStatus": "Non-Compliant",
+      "whetherListed": false,
+      "pan": "AAACK3344L",
+      "overdueFilings": ["MGT-7", "AOC-4"]
+    }
+  ],
+  "directors": [
+    {
+      "din": "00000111",
+      "name": "RAJESH KUMAR SHARMA",
+      "designation": "Managing Director",
+      "dateOfAppointment": "2009-03-15",
+      "pan": "ABCRS1234X",
+      "companies": ["U72200KA2009PTC049889", "U74999MH2005PLC154321"]
+    },
+    {
+      "din": "00000222",
+      "name": "MUKESH DHIRUBHAI AMBANI",
+      "designation": "Chairman and Managing Director",
+      "dateOfAppointment": "1977-06-01",
+      "pan": "AACPA1234K",
+      "companies": ["L17110MH1973PLC019786"]
+    },
+    {
+      "din": "00000333",
+      "name": "PRIYA AGARWAL",
+      "designation": "Director",
+      "dateOfAppointment": "2010-07-20",
+      "dateOfCessation": "2019-12-31",
+      "pan": "AADPA5678B",
+      "companies": ["U51909DL2010PTC205678"]
+    },
+    {
+      "din": "00000444",
+      "name": "SURESH NAIR",
+      "designation": "Whole Time Director",
+      "dateOfAppointment": "2015-11-12",
+      "pan": "AAJSN2345C",
+      "companies": ["U65910TN2015PTC101234", "U63090WB2018PTC223456"]
+    },
+    {
+      "din": "00000555",
+      "name": "VIKRAM PATEL",
+      "designation": "Director",
+      "dateOfAppointment": "2008-04-03",
+      "dateOfCessation": "2022-06-30",
+      "pan": "AABVP6789D",
+      "companies": ["U45200GJ2008PTC053421"]
+    },
+    {
+      "din": "00000666",
+      "name": "ANITA DESAI",
+      "designation": "Designated Partner",
+      "dateOfAppointment": "2016-02-28",
+      "pan": "AAGAD9900E",
+      "companies": ["AAA-1234", "U74999MH2005PLC154321"]
+    },
+    {
+      "din": "00000777",
+      "name": "RAHUL MEHTA",
+      "designation": "Director",
+      "dateOfAppointment": "2005-06-15",
+      "pan": "AAHRM1122F",
+      "companies": ["U74999MH2005PLC154321", "U72200KA2009PTC049889", "U63090WB2018PTC223456"]
+    },
+    {
+      "din": "00000888",
+      "name": "DEEPIKA KRISHNAMURTHY",
+      "designation": "Independent Director",
+      "dateOfAppointment": "2018-09-10",
+      "pan": "AAHDK4455G",
+      "companies": ["U63090WB2018PTC223456"]
+    }
+  ],
+  "compliance": {
+    "U72200KA2009PTC049889": {
+      "cin": "U72200KA2009PTC049889",
+      "filings": [
+        { "formType": "MGT-7", "period": "2022-23", "filedDate": "2023-11-28", "status": "Filed", "dueDate": "2023-11-29" },
+        { "formType": "AOC-4", "period": "2022-23", "filedDate": "2023-10-28", "status": "Filed", "dueDate": "2023-10-29" },
+        { "formType": "DIR-12", "period": "2023-24", "filedDate": "2024-05-10", "status": "Filed", "dueDate": "2024-06-01" }
+      ],
+      "lastUpdated": "2024-01-15",
+      "overallStatus": "Compliant"
+    },
+    "L17110MH1973PLC019786": {
+      "cin": "L17110MH1973PLC019786",
+      "filings": [
+        { "formType": "MGT-7", "period": "2022-23", "filedDate": "2023-11-15", "status": "Filed", "dueDate": "2023-11-29" },
+        { "formType": "AOC-4", "period": "2022-23", "filedDate": "2023-10-15", "status": "Filed", "dueDate": "2023-10-29" },
+        { "formType": "XBRL", "period": "2022-23", "filedDate": "2023-10-31", "status": "Filed", "dueDate": "2023-10-31" }
+      ],
+      "lastUpdated": "2024-01-10",
+      "overallStatus": "Compliant"
+    },
+    "U51909DL2010PTC205678": {
+      "cin": "U51909DL2010PTC205678",
+      "filings": [
+        { "formType": "MGT-7", "period": "2018-19", "status": "Not Filed", "dueDate": "2019-11-29" },
+        { "formType": "AOC-4", "period": "2018-19", "status": "Not Filed", "dueDate": "2019-10-29" },
+        { "formType": "MGT-7", "period": "2019-20", "status": "Not Filed", "dueDate": "2020-11-29" }
+      ],
+      "lastUpdated": "2024-01-12",
+      "overallStatus": "Non-Compliant"
+    },
+    "U65910TN2015PTC101234": {
+      "cin": "U65910TN2015PTC101234",
+      "filings": [
+        { "formType": "MGT-7", "period": "2022-23", "filedDate": "2023-12-01", "status": "Filed", "dueDate": "2023-11-29" },
+        { "formType": "AOC-4", "period": "2022-23", "status": "Pending", "dueDate": "2023-10-29" }
+      ],
+      "lastUpdated": "2024-01-08",
+      "overallStatus": "Partial"
+    },
+    "U45200GJ2008PTC053421": {
+      "cin": "U45200GJ2008PTC053421",
+      "filings": [
+        { "formType": "MGT-7", "period": "2020-21", "status": "Not Filed", "dueDate": "2021-11-29" },
+        { "formType": "AOC-4", "period": "2020-21", "status": "Not Filed", "dueDate": "2021-10-29" },
+        { "formType": "MGT-7", "period": "2021-22", "status": "Not Filed", "dueDate": "2022-11-29" },
+        { "formType": "AOC-4", "period": "2021-22", "status": "Not Filed", "dueDate": "2022-10-29" }
+      ],
+      "lastUpdated": "2024-01-05",
+      "overallStatus": "Non-Compliant"
+    },
+    "AAA-1234": {
+      "cin": "AAA-1234",
+      "filings": [
+        { "formType": "Form 11", "period": "2022-23", "filedDate": "2023-09-29", "status": "Filed", "dueDate": "2023-09-30" },
+        { "formType": "Form 8", "period": "2022-23", "filedDate": "2023-10-28", "status": "Filed", "dueDate": "2023-10-30" }
+      ],
+      "lastUpdated": "2024-01-11",
+      "overallStatus": "Compliant"
+    },
+    "U74999MH2005PLC154321": {
+      "cin": "U74999MH2005PLC154321",
+      "filings": [
+        { "formType": "MGT-7", "period": "2022-23", "filedDate": "2023-11-20", "status": "Filed", "dueDate": "2023-11-29" },
+        { "formType": "AOC-4", "period": "2022-23", "filedDate": "2023-10-25", "status": "Filed", "dueDate": "2023-10-29" }
+      ],
+      "lastUpdated": "2024-01-09",
+      "overallStatus": "Compliant"
+    },
+    "U63090WB2018PTC223456": {
+      "cin": "U63090WB2018PTC223456",
+      "filings": [
+        { "formType": "MGT-7", "period": "2022-23", "status": "Not Filed", "dueDate": "2023-11-29" },
+        { "formType": "AOC-4", "period": "2022-23", "status": "Not Filed", "dueDate": "2023-10-29" },
+        { "formType": "MGT-7", "period": "2021-22", "filedDate": "2022-12-10", "status": "Filed", "dueDate": "2022-11-29" }
+      ],
+      "lastUpdated": "2024-01-14",
+      "overallStatus": "Non-Compliant"
+    }
+  },
+  "panToCIN": {
+    "AAACI1234A": "U72200KA2009PTC049889",
+    "AAACR5055K": "L17110MH1973PLC019786",
+    "AAACA9876B": "U51909DL2010PTC205678",
+    "AAACC5432D": "U65910TN2015PTC101234",
+    "AAACG2211F": "U45200GJ2008PTC053421",
+    "AAATL9900H": "AAA-1234",
+    "AAACM7788J": "U74999MH2005PLC154321",
+    "AAACK3344L": "U63090WB2018PTC223456"
+  }
+}
