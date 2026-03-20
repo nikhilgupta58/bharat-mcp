@@ -1,0 +1,27 @@
+{
+  "name": "@bharat-mcp/server",
+  "version": "0.1.0",
+  "description": "Bharat MCP — India's Business Brain for AI. 10 GST + MCA tools for Claude.",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "bin": {
+    "bharat-mcp": "bin/bharat-mcp.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "test": "vitest run --passWithNoTests",
+    "dev": "tsx src/index.ts"
+  },
+  "dependencies": {
+    "@bharat-mcp/core": "workspace:*",
+    "@bharat-mcp/gst": "workspace:*",
+    "@bharat-mcp/mca": "workspace:*",
+    "@modelcontextprotocol/sdk": "^1.0.0"
+  },
+  "devDependencies": {
+    "tsx": "*",
+    "vitest": "*"
+  },
+  "license": "MIT",
+  "keywords": ["mcp", "claude", "india", "gst", "mca", "bharat", "gstin", "compliance"]
+}

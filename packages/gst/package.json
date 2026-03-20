@@ -1,10 +1,10 @@
 {
   "name": "@bharat-mcp/gst",
   "version": "0.1.0",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "main": "dist/src/index.js",
+  "types": "dist/src/index.d.ts",
   "bin": {
-    "bharat-mcp-gst": "dist/index.js"
+    "bharat-mcp-gst": "dist/src/index.js"
   },
   "scripts": {
     "build": "tsc",

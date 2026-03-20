@@ -2,6 +2,19 @@
 export { createMCAServer, startServer } from './server.js'
 export type { MCAServerOptions } from './server.js'
 
+// Tool exports
+export { CompanyLookupTool } from './tools/company-lookup.js'
+export { DirectorSearchTool } from './tools/director-search.js'
+export { CINValidateTool } from './tools/cin-validate.js'
+export { ComplianceCheckTool } from './tools/compliance-check.js'
+export { DirectorNetworkTool } from './tools/director-network.js'
+
+// Adapter exports
+export { MCACompanyMockAdapter, MCADirectorMockAdapter, MCAComplianceMockAdapter } from './adapters/mock.js'
+
+// Prompt exports
+export { businessHealthReportPrompt, buildBusinessHealthReportMessages } from './prompts/business-health-report.js'
+
 import { startServer } from './server.js'
 
 // Only run when executed directly (not imported as a library)
