@@ -1,6 +1,6 @@
 {
   "name": "@bharat-mcp/server",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Bharat MCP — India's Business Brain for AI. 10 GST + MCA tools for Claude.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
