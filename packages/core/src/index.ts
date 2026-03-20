@@ -5,3 +5,4 @@ export * from './cache';
 export * from './i18n';
 export * from './adapter-chain';
 export * from './base-tool';
+export * from './batch-processor';
