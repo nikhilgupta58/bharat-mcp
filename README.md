@@ -3,22 +3,21 @@
 > Open-source MCP servers that give Claude real-time access to India's GST and MCA business registries. Verify GSTINs, look up companies, assess vendor risk — in English and Hindi.
 
 [![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
-[![npm @bharat-mcp/gst](https://img.shields.io/npm/v/@bharat-mcp/gst?label=%40bharat-mcp%2Fgst)](https://www.npmjs.com/package/@bharat-mcp/gst)
-[![npm @bharat-mcp/mca](https://img.shields.io/npm/v/@bharat-mcp/mca?label=%40bharat-mcp%2Fmca)](https://www.npmjs.com/package/@bharat-mcp/mca)
+[![npm](https://img.shields.io/npm/v/@bharat-mcp/server?label=npm)](https://www.npmjs.com/package/@bharat-mcp/server)
 [![10 Tools](https://img.shields.io/badge/tools-10-FF9933)](https://github.com/nikhilgupta58/bharat-mcp)
 [![Hindi + English](https://img.shields.io/badge/lang-Hindi%20%2B%20English-1a1a4e)](https://github.com/nikhilgupta58/bharat-mcp)
 
 ---
 
-## Install in Claude Desktop (One Command)
+## Install in Claude Desktop
 
-Run this in your terminal:
+**One command:**
 
 ```bash
-npx @bharat-mcp/gst --setup
+npx @bharat-mcp/server --setup
 ```
 
-Or manually add to your Claude Desktop config file:
+This prints the config you need. Or manually add to your Claude Desktop config:
 
 **macOS:** `~/Library/Application Support/Claude/claude_desktop_config.json`
 **Windows:** `%APPDATA%\Claude\claude_desktop_config.json`
@@ -26,13 +25,9 @@ Or manually add to your Claude Desktop config file:
 ```json
 {
   "mcpServers": {
-    "bharat-mcp-gst": {
+    "bharat-mcp": {
       "command": "npx",
-      "args": ["-y", "@bharat-mcp/gst@latest"]
-    },
-    "bharat-mcp-mca": {
-      "command": "npx",
-      "args": ["-y", "@bharat-mcp/mca@latest"]
+      "args": ["-y", "@bharat-mcp/server@latest"]
     }
   }
 }
@@ -88,17 +83,9 @@ For **real government data**, get a free API key from [Sandbox.co.in](https://sa
 ```json
 {
   "mcpServers": {
-    "bharat-mcp-gst": {
+    "bharat-mcp": {
       "command": "npx",
-      "args": ["-y", "@bharat-mcp/gst@latest"],
-      "env": {
-        "SANDBOX_API_KEY": "your-key",
-        "SANDBOX_API_SECRET": "your-secret"
-      }
-    },
-    "bharat-mcp-mca": {
-      "command": "npx",
-      "args": ["-y", "@bharat-mcp/mca@latest"],
+      "args": ["-y", "@bharat-mcp/server@latest"],
       "env": {
         "SANDBOX_API_KEY": "your-key",
         "SANDBOX_API_SECRET": "your-secret"
