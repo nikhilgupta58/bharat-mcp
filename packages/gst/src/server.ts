@@ -3,9 +3,10 @@ import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js'
 import { CallToolRequestSchema, ListToolsRequestSchema } from '@modelcontextprotocol/sdk/types.js'
 import { CacheLayer, AdapterChain, I18nService } from '@bharat-mcp/core'
 import { GSTMockAdapter } from './adapters/mock'
+import { SandboxGSTAdapter } from './adapters/sandbox'
 import { GSTINVerifyTool } from './tools/gstin-verify'
 
-export function createGSTServer(options?: { sandboxApiKey?: string; redisUrl?: string; locale?: 'en' | 'hi' }) {
+export function createGSTServer(options?: { sandboxApiKey?: string; sandboxApiSecret?: string; redisUrl?: string; locale?: 'en' | 'hi' }) {
   const server = new Server(
     { name: 'bharat-mcp-gst', version: '0.1.0' },
     { capabilities: { tools: {} } }
@@ -14,8 +15,12 @@ export function createGSTServer(options?: { sandboxApiKey?: string; redisUrl?: s
   const cache = new CacheLayer(options?.redisUrl)
   const i18n = new I18nService(options?.locale || 'en')
 
-  // Build adapter chain: Mock for now, Sandbox will be added in Task 7
-  const gstAdapters = [new GSTMockAdapter()]
+  // Build adapter chain: Sandbox first (if key provided), Mock as fallback
+  const gstAdapters = []
+  if (options?.sandboxApiKey) {
+    gstAdapters.push(new SandboxGSTAdapter(options.sandboxApiKey, options.sandboxApiSecret || ''))
+  }
+  gstAdapters.push(new GSTMockAdapter())
   const gstChain = new AdapterChain(gstAdapters)
 
   const gstinVerify = new GSTINVerifyTool(cache, gstChain, i18n)

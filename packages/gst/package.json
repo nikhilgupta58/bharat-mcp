@@ -13,10 +13,11 @@
   },
   "dependencies": {
     "@bharat-mcp/core": "workspace:*",
-    "@modelcontextprotocol/sdk": "^1.0.0"
+    "@modelcontextprotocol/sdk": "^1.0.0",
+    "axios": "^1.7.0"
   },
   "devDependencies": {
-    "vitest": "*",
-    "tsx": "*"
+    "tsx": "*",
+    "vitest": "*"
   }
 }
