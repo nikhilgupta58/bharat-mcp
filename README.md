@@ -3,53 +3,56 @@
 > Open-source MCP servers that give Claude real-time access to India's GST and MCA business registries. Verify GSTINs, look up companies, assess vendor risk — in English and Hindi.
 
 [![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
-[![npm](https://img.shields.io/npm/v/@bharat-mcp/gst?label=npm%20%40bharat-mcp%2Fgst)](https://www.npmjs.com/package/@bharat-mcp/gst)
-[![10 Tools](https://img.shields.io/badge/tools-10-orange)](https://github.com/nikhilkumargupta/bharat-mcp)
-[![Hindi + English](https://img.shields.io/badge/language-Hindi%20%2B%20English-saffron)](https://github.com/nikhilkumargupta/bharat-mcp)
-
-<!-- Demo GIF placeholder — 30s vendor verification flow -->
-![Demo](docs/demo.gif)
+[![npm @bharat-mcp/gst](https://img.shields.io/npm/v/@bharat-mcp/gst?label=%40bharat-mcp%2Fgst)](https://www.npmjs.com/package/@bharat-mcp/gst)
+[![npm @bharat-mcp/mca](https://img.shields.io/npm/v/@bharat-mcp/mca?label=%40bharat-mcp%2Fmca)](https://www.npmjs.com/package/@bharat-mcp/mca)
+[![10 Tools](https://img.shields.io/badge/tools-10-FF9933)](https://github.com/nikhilgupta58/bharat-mcp)
+[![Hindi + English](https://img.shields.io/badge/lang-Hindi%20%2B%20English-1a1a4e)](https://github.com/nikhilgupta58/bharat-mcp)
 
 ---
 
-## Quick Start
+## Install in Claude Desktop (One Command)
+
+Run this in your terminal:
 
 ```bash
-# Install GST Intelligence Server
-npx @bharat-mcp/gst
-
-# Install Company Intelligence Server
-npx @bharat-mcp/mca
+npx @bharat-mcp/gst --setup
 ```
 
-### Claude Desktop Configuration
+Or manually add to your Claude Desktop config file:
 
-Add to `~/Library/Application Support/Claude/claude_desktop_config.json`:
+**macOS:** `~/Library/Application Support/Claude/claude_desktop_config.json`
+**Windows:** `%APPDATA%\Claude\claude_desktop_config.json`
 
 ```json
 {
   "mcpServers": {
     "bharat-mcp-gst": {
       "command": "npx",
-      "args": ["@bharat-mcp/gst"],
-      "env": {
-        "SANDBOX_API_KEY": "your-key-here",
-        "SANDBOX_API_SECRET": "your-secret-here"
-      }
+      "args": ["-y", "@bharat-mcp/gst@latest"]
     },
     "bharat-mcp-mca": {
       "command": "npx",
-      "args": ["@bharat-mcp/mca"],
-      "env": {
-        "SANDBOX_API_KEY": "your-key-here",
-        "SANDBOX_API_SECRET": "your-secret-here"
-      }
+      "args": ["-y", "@bharat-mcp/mca@latest"]
     }
   }
 }
 ```
 
-> Without an API key, Bharat MCP uses curated mock data — perfect for trying it out.
+Then **restart Claude Desktop**. That's it — 10 India business tools are now available.
+
+> Works immediately with mock data. Add a [Sandbox.co.in](#getting-real-data) API key for real government data.
+
+---
+
+## Try It
+
+Open Claude Desktop and ask:
+
+- **"Verify GSTIN 27AAPFU0939F1ZV"** — instant GST registration check
+- **"Look up company U72200KA2009PTC049889"** — MCA company details
+- **"What's the GST rate for HSN 8471?"** — tax rate lookup
+- **"Run vendor due diligence on GSTIN 07AADCS4212H1ZP"** — full cross-module check
+- **"मेरे vendor का GST number check करो"** — works in Hindi too
 
 ---
 
@@ -57,18 +60,55 @@ Add to `~/Library/Application Support/Claude/claude_desktop_config.json`:
 
 | GST Intelligence | Company Intelligence |
 |---|---|
-| `gstin_verify` — Verify GSTIN registration status | `company_lookup` — Look up company by CIN, name, or PAN |
-| `hsn_search` — Search HSN/SAC codes and descriptions | `director_search` — Search director by DIN or name |
-| `gst_rate_calculator` — Calculate applicable GST rates | `cin_validate` — Validate and parse a CIN |
-| `gst_return_status` — Check GST filing status | `company_compliance_check` — Check MCA filing compliance |
-| `gstin_by_pan` — List all GSTINs registered to a PAN | `director_network_map` — Map all companies linked to a director |
+| `gstin_verify` — Verify GSTIN registration | `company_lookup` — Look up company by CIN/name/PAN |
+| `hsn_search` — Search HSN/SAC codes | `director_search` — Search director by DIN |
+| `gst_rate_calculator` — Calculate GST rates | `cin_validate` — Validate and parse CIN |
+| `gst_return_status` — Check filing status | `company_compliance_check` — MCA compliance check |
+| `gstin_by_pan` — List GSTINs for a PAN | `director_network_map` — Map director's companies |
 
 ### Cross-Module Features
 
 - **Entity Resolution** — GSTIN → PAN → CIN automatic cross-referencing
 - **Risk Scoring** — Weighted risk assessment across GST + MCA signals
 - **Vendor Due Diligence** — One-command comprehensive vendor check
-- **Business Health Report** — Full business assessment report in English or Hindi
+- **Business Health Report** — Full business assessment in English or Hindi
+
+---
+
+## Getting Real Data
+
+Without an API key, Bharat MCP uses curated mock data — perfect for demos and evaluation.
+
+For **real government data**, get a free API key from [Sandbox.co.in](https://sandbox.co.in):
+
+1. Sign up at [sandbox.co.in](https://sandbox.co.in) (free trial available)
+2. Copy your API key and secret from the dashboard
+3. Update your Claude Desktop config:
+
+```json
+{
+  "mcpServers": {
+    "bharat-mcp-gst": {
+      "command": "npx",
+      "args": ["-y", "@bharat-mcp/gst@latest"],
+      "env": {
+        "SANDBOX_API_KEY": "your-key",
+        "SANDBOX_API_SECRET": "your-secret"
+      }
+    },
+    "bharat-mcp-mca": {
+      "command": "npx",
+      "args": ["-y", "@bharat-mcp/mca@latest"],
+      "env": {
+        "SANDBOX_API_KEY": "your-key",
+        "SANDBOX_API_SECRET": "your-secret"
+      }
+    }
+  }
+}
+```
+
+4. Restart Claude Desktop
 
 ---
 
@@ -88,52 +128,44 @@ Add to `~/Library/Application Support/Claude/claude_desktop_config.json`:
 
 ```
 ┌─────────────────────────────────────────────────────────┐
-│                     Claude (AI Client)                  │
+│                     Claude Desktop                       │
 └────────────────────────┬────────────────────────────────┘
-                         │  MCP Protocol (JSON-RPC 2.0)
+                         │  MCP Protocol (stdio / HTTP)
            ┌─────────────┴──────────────┐
            │                            │
   ┌────────▼────────┐          ┌────────▼────────┐
   │   GST Server    │          │   MCA Server    │
-  │  @bharat-mcp/   │          │  @bharat-mcp/   │
-  │      gst        │          │      mca        │
+  │ @bharat-mcp/gst │          │ @bharat-mcp/mca │
+  │   5 tools       │          │   5 tools       │
   └────────┬────────┘          └────────┬────────┘
            │                            │
            └─────────────┬──────────────┘
                          │
               ┌──────────▼──────────┐
-              │    @bharat-mcp/     │
-              │       core          │
-              │  AdapterChain +     │
-              │  i18n + Risk Score  │
+              │   @bharat-mcp/core  │
+              │   AdapterChain      │
+              │   EntityResolver    │
+              │   RiskScorer        │
+              │   i18n (EN + HI)    │
               └──────────┬──────────┘
                          │
            ┌─────────────┴──────────────┐
            │                            │
   ┌────────▼────────┐          ┌────────▼────────┐
-  │ Sandbox Adapter │          │  Mock Adapter   │
-  │ (sandbox.co.in) │          │ (dev / no key)  │
+  │ Sandbox.co.in   │          │  Mock Adapter   │
+  │  (real data)    │          │  (no API key)   │
   └─────────────────┘          └─────────────────┘
-```
-
----
-
-## Getting a Sandbox API Key
-
-1. Sign up at [sandbox.co.in](https://sandbox.co.in)
-2. Get your API key and secret from the dashboard
-3. Add them to your Claude Desktop config or a `.env` file at the repo root
-
-```env
-SANDBOX_API_KEY=your-key-here
-SANDBOX_API_SECRET=your-secret-here
 ```
 
 ---
 
 ## Docker Deployment
 
+For team or remote deployments, run all 10 tools in one container:
+
 ```bash
+git clone https://github.com/nikhilgupta58/bharat-mcp.git
+cd bharat-mcp
 docker compose -f docker/docker-compose.yml up
 ```
 
@@ -142,41 +174,30 @@ docker compose -f docker/docker-compose.yml up
 ## Development
 
 ```bash
-# Clone the repo
-git clone https://github.com/nikhilkumargupta/bharat-mcp.git
+git clone https://github.com/nikhilgupta58/bharat-mcp.git
 cd bharat-mcp
-
-# Install dependencies (requires pnpm)
-pnpm install
-
-# Build all packages
-pnpm build
-
-# Run tests
-pnpm test
+pnpm install && pnpm build && pnpm test
 ```
 
-See [CONTRIBUTING.md](CONTRIBUTING.md) for a full guide on adding tools, adapters, and languages.
+See [CONTRIBUTING.md](CONTRIBUTING.md) for adding tools, adapters, and languages.
 
 ---
 
 ## Roadmap
 
-- [ ] Module 3: Compliance Hub (EPFO, Udyam, FSSAI)
-- [ ] Full Indic localisation (9 additional languages)
+- [ ] Compliance Hub (EPFO, Udyam, FSSAI)
+- [ ] 9 more Indic languages
 - [ ] Interactive docs playground
-- [ ] API Setu adapter (alternative to Sandbox)
-- [ ] Webhook notifications for compliance changes
-- [ ] Enterprise features (SLA, audit logs, billing)
+- [ ] API Setu adapter
+- [ ] Webhook notifications
+- [ ] Enterprise features (SLA, audit logs)
 
-See [TODOS.md](TODOS.md) for the full prioritised backlog.
+See [TODOS.md](TODOS.md) for the full backlog.
 
 ---
-
-## Contributing
-
-Contributions are welcome. See [CONTRIBUTING.md](CONTRIBUTING.md) to get started.
 
 ## License
 
 MIT — see [LICENSE](LICENSE)
+
+Made with ❤️ for Indian businesses by [Year1 Design](https://year1.design)
